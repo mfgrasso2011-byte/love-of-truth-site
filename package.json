@@ -1,0 +1,7 @@
+{
+  "name": "love-of-truth-static",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}

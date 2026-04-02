@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sailing to Chayah: A Desperate Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Love of Truth home">
+          <img
+            class="brand-logo"
+            src="References/Full%20logo%20no%20text,%20transparent.png"
+            alt="Love of Truth"
+          />
+          <span class="brand-text">Love of Truth</span>
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Toggle navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <div class="nav-dropdown">
+            <a href="books.html">Books</a>
+            <div class="nav-dropdown-menu" aria-label="Book links">
+              <a href="sailing-to-chayah.html">Sailing to Chayah: A Desperate Journey</a>
+              <a href="his-kingdom.html">His Kingdom Shall Never End</a>
+            </div>
+          </div>
+          <a href="https://www.youtube.com/channel/UC4DTiOj4ncwTFGFWB8Rybvw" target="_blank" rel="noreferrer">Teaching</a>
+          <a href="https://newcovenantopc.com/sermon-archive/books/?swcfpc=1" target="_blank" rel="noreferrer">Sermons</a>
+        </nav>
+
+        <div class="header-actions" aria-label="Account and cart shortcuts">
+          <a href="#account" aria-label="Account">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+              />
+            </svg>
+          </a>
+          <a class="cart-link" href="cart.html" aria-label="Cart">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M7 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Zm10 0a2 2 0 1 0 2 2 2 2 0 0 0-2-2ZM6.2 6l.6 3h11.7l1.4-5H5.6L5 1H1v2h2.4l2.2 11.2A2 2 0 0 0 7.6 16H19v-2H7.6l-.3-1.5h10.9a2 2 0 0 0 1.9-1.4L22 4.4A1 1 0 0 0 21 3H6.1Z"
+              />
+            </svg>
+            <span class="cart-count" data-cart-count>0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="product-page">
+      <section class="product-hero">
+        <div class="container">
+          <div class="product-grid">
+            <div class="product-image-frame">
+              <img
+                class="product-cover"
+                src="References/Sailing%20to%20Chayah/A%20Desperate%20Journey%20Ebook%20Cover.jpg"
+                alt="Sailing to Chayah: A Desperate Journey ebook cover"
+              />
+            </div>
+
+            <div class="product-copy">
+              <h1 class="product-title">Sailing to Chayah: A Desperate Journey</h1>
+
+              <fieldset class="format-options" aria-label="Purchase format">
+                <legend class="format-label">Format</legend>
+                <label class="format-option">
+                  <input type="radio" name="format" value="24.99" checked />
+                  <span>Hardcover</span>
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="format" value="17.99" />
+                  <span>Paperback</span>
+                </label>
+                <label class="format-option">
+                  <input type="radio" name="format" value="7.99" />
+                  <span>EBook</span>
+                </label>
+              </fieldset>
+
+              <p class="product-price" data-product-price>$24.99</p>
+              <p class="product-summary">
+                “It seemed that a ray of light had broken through the clouds in the middle
+                of a storm at sea. A wave of comfort swept over him. He felt like the
+                crushing weight had been lifted from his shoulders. God would forgive him.
+                He understood. He knew it to be true.”
+              </p>
+              <p class="product-summary">
+                Far to the west lies the land of Chayah, a land of hope for all who are
+                willing to make the desperate journey across the sea. Nathan Ashir and his
+                family, however, had no thought of leaving their home. They had everything
+                they needed. His family was the most powerful family in all Beth Aven until
+                he lost everything. As his family is brought lower and lower, they must learn
+                to place their trust in the one who is sovereign over all.
+              </p>
+
+              <div class="product-note">
+                <p>Free shipping on orders over $40.</p>
+                <p>Every hardcover or paperback purchase includes the ebook at no extra cost.</p>
+              </div>
+
+              <form class="purchase-row" data-purchase-form>
+                <label class="sr-only" for="book-quantity">Quantity</label>
+                <input id="book-quantity" type="number" min="1" value="1" data-quantity-input />
+                <button
+                  class="button button-dark"
+                  type="button"
+                  data-add-to-cart
+                  data-product-id="sailing-to-chayah"
+                >Preorder</button>
+              </form>
+              <p class="cart-feedback" data-add-feedback></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

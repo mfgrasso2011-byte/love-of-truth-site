@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Books</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="Love of Truth home">
+          <img
+            class="brand-logo"
+            src="References/Full%20logo%20no%20text,%20transparent.png"
+            alt="Love of Truth"
+          />
+          <span class="brand-text">Love of Truth</span>
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Toggle navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <div class="nav-dropdown">
+            <a href="books.html">Books</a>
+            <div class="nav-dropdown-menu" aria-label="Book links">
+              <a href="sailing-to-chayah.html">Sailing to Chayah: A Desperate Journey</a>
+              <a href="his-kingdom.html">His Kingdom Shall Never End</a>
+            </div>
+          </div>
+          <a href="https://www.youtube.com/channel/UC4DTiOj4ncwTFGFWB8Rybvw" target="_blank" rel="noreferrer">Teaching</a>
+          <a href="https://newcovenantopc.com/sermon-archive/books/?swcfpc=1" target="_blank" rel="noreferrer">Sermons</a>
+        </nav>
+
+        <div class="header-actions" aria-label="Account and cart shortcuts">
+          <a href="#account" aria-label="Account">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"
+              />
+            </svg>
+          </a>
+          <a class="cart-link" href="cart.html" aria-label="Cart">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M7 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2Zm10 0a2 2 0 1 0 2 2 2 2 0 0 0-2-2ZM6.2 6l.6 3h11.7l1.4-5H5.6L5 1H1v2h2.4l2.2 11.2A2 2 0 0 0 7.6 16H19v-2H7.6l-.3-1.5h10.9a2 2 0 0 0 1.9-1.4L22 4.4A1 1 0 0 0 21 3H6.1Z"
+              />
+            </svg>
+            <span class="cart-count" data-cart-count>0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="books-page">
+      <section class="books-hero">
+        <div class="container books-inner">
+          <h1 class="books-title">Books</h1>
+          <div class="books-divider" aria-hidden="true">
+            <svg viewBox="0 0 520 26" role="presentation" focusable="false">
+              <defs>
+                <linearGradient id="books-divider-fade-left" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#af7b35" stop-opacity="0.62" />
+                  <stop offset="18%" stop-color="#af7b35" stop-opacity="0.86" />
+                  <stop offset="100%" stop-color="#af7b35" stop-opacity="1" />
+                </linearGradient>
+                <linearGradient id="books-divider-fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#af7b35" stop-opacity="1" />
+                  <stop offset="82%" stop-color="#af7b35" stop-opacity="0.86" />
+                  <stop offset="100%" stop-color="#af7b35" stop-opacity="0.62" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0 13 H214"
+                fill="none"
+                stroke="url(#books-divider-fade-left)"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M306 13 H520"
+                fill="none"
+                stroke="url(#books-divider-fade-right)"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M0 13 H214"
+                fill="none"
+                stroke="#c69447"
+                stroke-opacity="0.58"
+                stroke-width="1"
+                stroke-linecap="round"
+              />
+              <path
+                d="M306 13 H520"
+                fill="none"
+                stroke="#c69447"
+                stroke-opacity="0.58"
+                stroke-width="1"
+                stroke-linecap="round"
+              />
+              <path
+                d="M232 13 C237 8.8 241 8.8 246 13 C241 17.2 237 17.2 232 13 Z"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="1.1"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M288 13 C283 8.8 279 8.8 274 13 C279 17.2 283 17.2 288 13 Z"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="1.1"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M248 13 C252 9.2 256 9.2 260 13 C256 16.8 252 16.8 248 13 Z"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="1.05"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M272 13 C268 9.2 264 9.2 260 13 C264 16.8 268 16.8 272 13 Z"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="1.05"
+                stroke-linejoin="round"
+              />
+              <circle cx="260" cy="13" r="1.55" fill="#c79f58" />
+              <path
+                d="M240 13 H247 M273 13 H280"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="1"
+                stroke-linecap="round"
+              />
+              <path
+                d="M255.2 10.4 L260 5.7 L264.8 10.4"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="0.95"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M255.2 15.6 L260 20.3 L264.8 15.6"
+                fill="none"
+                stroke="#c79f58"
+                stroke-width="0.95"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <div class="books-grid">
+            <article class="book-card">
+              <a class="book-cover-link" href="sailing-to-chayah.html">
+                <img
+                  class="book-cover"
+                  src="References/Sailing%20to%20Chayah/A%20Desperate%20Journey%20Ebook%20Cover.jpg"
+                  alt="Sailing to Chayah: A Desperate Journey"
+                />
+              </a>
+              <h2 class="book-name">Sailing to Chayah</h2>
+              <p class="book-subtitle">A Desperate Journey</p>
+              <a class="button button-gold book-button" href="sailing-to-chayah.html">Learn More</a>
+            </article>
+
+            <article class="book-card">
+              <div class="book-cover-link">
+                <img
+                  class="book-cover"
+                  src="References/His%20Kingdom%20Placeholder.png"
+                  alt="His Kingdom Shall Never End"
+                />
+              </div>
+              <h2 class="book-name">His Kingdom Shall Never End</h2>
+              <p class="book-subtitle">The Davidic Covenant and the Promise of the Messiah</p>
+              <a class="button button-gold book-button" href="his-kingdom.html">Learn More</a>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
