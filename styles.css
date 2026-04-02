@@ -1086,15 +1086,7 @@ select {
   }
 
   .nav-dropdown-menu {
-    position: static;
-    min-width: 0;
-    padding: 6px 0 0 14px;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
+    display: none;
   }
 
   .site-nav.is-open {
