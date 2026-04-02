@@ -553,6 +553,14 @@ select {
   font-weight: 600;
 }
 
+.product-ship-note {
+  margin: -12px 0 22px;
+  color: var(--ink-soft);
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
 .product-status {
   display: inline-flex;
   align-items: center;
