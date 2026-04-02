@@ -1110,9 +1110,9 @@ select {
   }
 
   .slide-copy {
-    left: 50%;
-    top: auto;
-    bottom: 76px;
+    left: var(--button-left-mobile, 50%);
+    top: var(--button-top-mobile, auto);
+    bottom: var(--button-bottom-mobile, 76px);
     transform: translateX(-50%);
   }
 
@@ -1168,7 +1168,7 @@ select {
   }
 
   .slide-copy {
-    bottom: 64px;
+    bottom: var(--button-bottom-mobile, 64px);
   }
 
   .carousel-controls {
@@ -1231,5 +1231,39 @@ select {
 
   .about-simple-copy p {
     font-size: 0.96rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .slide-sailing {
+    --button-left-mobile: 71%;
+    --button-bottom-mobile: 74px;
+  }
+
+  .slide-preaching {
+    --button-left-mobile: 68%;
+    --button-bottom-mobile: 72px;
+  }
+
+  .slide-youtube {
+    --button-left-mobile: 36%;
+    --button-bottom-mobile: 126px;
+  }
+}
+
+@media (max-width: 640px) {
+  .slide-sailing {
+    --button-left-mobile: 71%;
+    --button-bottom-mobile: 58px;
+  }
+
+  .slide-preaching {
+    --button-left-mobile: 67%;
+    --button-bottom-mobile: 56px;
+  }
+
+  .slide-youtube {
+    --button-left-mobile: 35%;
+    --button-bottom-mobile: 104px;
   }
 }
