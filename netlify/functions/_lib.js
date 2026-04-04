@@ -5,14 +5,14 @@ const BOOKS = {
   "sailing-to-chayah": {
     name: "Sailing to Chayah: A Desperate Journey",
     formats: {
-      Hardcover: { amount: 2499, requiresShipping: true },
-      Paperback: { amount: 1799, requiresShipping: true },
-      EBook: { amount: 799, requiresShipping: false },
+      Hardcover: { amount: 2099, requiresShipping: true },
+      Paperback: { amount: 1499, requiresShipping: true },
+      EBook: { amount: 499, requiresShipping: false },
     },
   },
 };
 
-const SHIPPING_RATE_UNDER_THRESHOLD = 699;
+const SHIPPING_RATE_UNDER_THRESHOLD = 599;
 const FREE_SHIPPING_THRESHOLD = 4000;
 
 function getConfig() {
