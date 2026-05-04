@@ -5,9 +5,9 @@ const BOOKS = {
   "sailing-to-chayah": {
     name: "Sailing to Chayah: A Desperate Journey",
     formats: {
-      Hardcover: { amount: 2099, requiresShipping: true },
-      Paperback: { amount: 1499, requiresShipping: true },
-      EBook: { amount: 499, requiresShipping: false },
+      Hardcover: { amount: 2099, requiresShipping: true, taxCode: "txcd_99999999" },
+      Paperback: { amount: 1499, requiresShipping: true, taxCode: "txcd_99999999" },
+      EBook: { amount: 499, requiresShipping: false, taxCode: "txcd_10302000" },
     },
   },
 };
@@ -69,6 +69,7 @@ function validateItems(items) {
       quantity,
       requiresShipping: format.requiresShipping,
       name: `${book.name} (${item.format})`,
+      taxCode: format.taxCode,
       unitAmount: format.amount,
     };
   });
@@ -121,6 +122,7 @@ function buildStripeForm(items, config) {
     params.set(`line_items[${index}][price_data][unit_amount]`, String(item.unitAmount));
     if (config.enableStripeTax) {
       params.set(`line_items[${index}][price_data][tax_behavior]`, "exclusive");
+      params.set(`line_items[${index}][price_data][product_data][tax_code]`, item.taxCode);
     }
     params.set(`line_items[${index}][price_data][product_data][name]`, item.name);
   });
