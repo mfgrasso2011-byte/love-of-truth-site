@@ -56,6 +56,7 @@ const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY || "";
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const ORDER_FROM_EMAIL = process.env.ORDER_FROM_EMAIL || "";
 const ADMIN_NOTIFY_EMAIL = process.env.ADMIN_NOTIFY_EMAIL || "";
+const BOOKFUNNEL_ZAPIER_WEBHOOK_URL = process.env.BOOKFUNNEL_ZAPIER_WEBHOOK_URL || "";
 const ENABLE_STRIPE_TAX = String(process.env.ENABLE_STRIPE_TAX || "true") === "true";
 const SHIPPING_RATE_UNDER_THRESHOLD = 599;
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -118,6 +119,7 @@ function recordCompletedOrder(session) {
     fs.mkdirSync(dataDir, { recursive: true });
   }
 
+  const metadata = session.metadata || {};
   const record = {
     receivedAt: new Date().toISOString(),
     sessionId: session.id,
@@ -126,6 +128,9 @@ function recordCompletedOrder(session) {
     amountTotal: session.amount_total,
     currency: session.currency,
     shippingDetails: session.shipping_details || null,
+    ebookDeliveryQuantity: Math.max(0, Number(metadata.ebook_delivery_quantity || 0)),
+    ebookDeliverySource: metadata.ebook_delivery_source || "none",
+    metadata,
   };
 
   fs.appendFileSync(path.join(dataDir, "orders.ndjson"), `${JSON.stringify(record)}\n`);
@@ -243,11 +248,35 @@ function validateItems(items) {
   });
 }
 
+function buildFulfillmentSummary(items) {
+  const hasPhysical = items.some((item) => item.requiresShipping);
+  const hasStandaloneEbook = items.some((item) => item.name.endsWith("(EBook)"));
+  const ebookDeliveryQuantity = hasPhysical || hasStandaloneEbook ? 1 : 0;
+  const ebookDeliverySource = hasPhysical
+    ? hasStandaloneEbook
+      ? "bundle_and_ebook"
+      : "bundle"
+    : hasStandaloneEbook
+      ? "ebook"
+      : "none";
+
+  return {
+    ebookDeliveryQuantity,
+    ebookDeliverySource,
+  };
+}
+
 function buildStripeForm(items) {
   const params = new URLSearchParams();
   params.set("mode", "payment");
   params.set("success_url", `${DOMAIN}/success.html?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${DOMAIN}/cancel.html`);
+
+  const fulfillment = buildFulfillmentSummary(items);
+  params.set("metadata[ebook_delivery_quantity]", String(fulfillment.ebookDeliveryQuantity));
+  params.set("metadata[ebook_delivery_source]", fulfillment.ebookDeliverySource);
+  params.set("metadata[ebook_delivery_title]", "Sailing to Chayah: A Desperate Journey");
+  params.set("metadata[ebook_delivery_format]", "EBook");
 
   if (ENABLE_STRIPE_TAX) {
     params.set("automatic_tax[enabled]", "true");
@@ -324,6 +353,110 @@ async function createCheckoutSession(items) {
   return data;
 }
 
+async function stripeRequest(pathname, init = {}) {
+  if (!STRIPE_SECRET_KEY) {
+    throw new Error("Missing STRIPE_SECRET_KEY on the server.");
+  }
+
+  const response = await fetch(`https://api.stripe.com${pathname}`, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${STRIPE_SECRET_KEY}`,
+      ...(init.headers || {}),
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data?.error?.message || `Stripe request failed for ${pathname}.`);
+  }
+
+  return data;
+}
+
+async function retrieveCheckoutSession(sessionId) {
+  return stripeRequest(`/v1/checkout/sessions/${encodeURIComponent(sessionId)}`);
+}
+
+async function updateCheckoutSessionMetadata(sessionId, metadata) {
+  const params = new URLSearchParams();
+  Object.entries(metadata).forEach(([key, value]) => {
+    params.set(`metadata[${key}]`, String(value));
+  });
+
+  return stripeRequest(`/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params.toString(),
+  });
+}
+
+function splitCustomerName(name) {
+  const trimmed = String(name || "").trim();
+  if (!trimmed) return { firstName: "", lastName: "" };
+  const [firstName, ...rest] = trimmed.split(/\s+/);
+  return {
+    firstName,
+    lastName: rest.join(" "),
+  };
+}
+
+async function triggerBookfunnelDelivery(order) {
+  if (!order.ebookDeliveryQuantity) {
+    return;
+  }
+
+  if (!BOOKFUNNEL_ZAPIER_WEBHOOK_URL) {
+    console.log("BookFunnel delivery skipped: missing BOOKFUNNEL_ZAPIER_WEBHOOK_URL.");
+    return;
+  }
+
+  if (!order.customerEmail) {
+    throw new Error("Cannot fulfill ebook delivery without a customer email address.");
+  }
+
+  const latestSession = await retrieveCheckoutSession(order.sessionId);
+  if (latestSession.metadata?.bookfunnel_fulfilled_at) {
+    return;
+  }
+
+  const { firstName, lastName } = splitCustomerName(order.customerName);
+  const payload = {
+    sessionId: order.sessionId,
+    transactionId: order.sessionId,
+    orderNumber: order.sessionId,
+    email: order.customerEmail,
+    firstName,
+    lastName,
+    itemName: `${latestSession.metadata?.ebook_delivery_title || "Sailing to Chayah: A Desperate Journey"} (${latestSession.metadata?.ebook_delivery_format || "EBook"})`,
+    itemSku: "sailing-to-chayah-ebook",
+    quantity: 1,
+    fulfillmentSource: latestSession.metadata?.ebook_delivery_source || order.ebookDeliverySource,
+    total: typeof order.amountTotal === "number" ? (order.amountTotal / 100).toFixed(2) : "0.00",
+    currency: String(order.currency || "usd").toUpperCase(),
+  };
+
+  const response = await fetch(BOOKFUNNEL_ZAPIER_WEBHOOK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(`BookFunnel webhook failed: ${await response.text()}`);
+  }
+
+  await updateCheckoutSessionMetadata(order.sessionId, {
+    bookfunnel_fulfilled_at: new Date().toISOString(),
+    bookfunnel_fulfillment_status: "sent",
+    bookfunnel_fulfillment_session_id: order.sessionId,
+  });
+}
+
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, DOMAIN);
 
@@ -354,6 +487,7 @@ const server = http.createServer(async (req, res) => {
 
       if (event.type === "checkout.session.completed") {
         const order = recordCompletedOrder(event.data.object);
+        await triggerBookfunnelDelivery(order);
         await sendAdminOrderEmail(order);
       }
 

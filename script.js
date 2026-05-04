@@ -115,9 +115,7 @@ function renderCart() {
 
   let subtotal = 0;
   const hasPhysical = cart.some((item) => isPhysicalFormat(item.format));
-  const bonusEbookQuantity = hasPhysical
-    ? cart.reduce((sum, item) => sum + (isPhysicalFormat(item.format) ? Number(item.quantity || 0) : 0), 0)
-    : 0;
+  const bonusEbookQuantity = hasPhysical ? 1 : 0;
   const displayItems = cart
     .map((item, index) => {
       const unitAmount = unitAmountFor(item);
