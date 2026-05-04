@@ -82,6 +82,7 @@ function buildStripeForm(items, config) {
 
   if (config.enableStripeTax) {
     params.set("automatic_tax[enabled]", "true");
+    params.set("billing_address_collection", "required");
   }
 
   const needsShipping = items.some((item) => item.requiresShipping);
@@ -107,12 +108,20 @@ function buildStripeForm(items, config) {
     );
     params.set("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "usd");
     params.set("shipping_options[0][shipping_rate_data][display_name]", shippingName);
+
+    if (config.enableStripeTax) {
+      params.set("shipping_options[0][shipping_rate_data][tax_behavior]", "exclusive");
+      params.set("shipping_options[0][shipping_rate_data][tax_code]", "txcd_92010001");
+    }
   }
 
   items.forEach((item, index) => {
     params.set(`line_items[${index}][quantity]`, String(item.quantity));
     params.set(`line_items[${index}][price_data][currency]`, "usd");
     params.set(`line_items[${index}][price_data][unit_amount]`, String(item.unitAmount));
+    if (config.enableStripeTax) {
+      params.set(`line_items[${index}][price_data][tax_behavior]`, "exclusive");
+    }
     params.set(`line_items[${index}][price_data][product_data][name]`, item.name);
   });
 
