@@ -56,7 +56,7 @@ const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY || "";
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const ORDER_FROM_EMAIL = process.env.ORDER_FROM_EMAIL || "";
 const ADMIN_NOTIFY_EMAIL = process.env.ADMIN_NOTIFY_EMAIL || "";
-const BOOKFUNNEL_ZAPIER_WEBHOOK_URL = process.env.BOOKFUNNEL_ZAPIER_WEBHOOK_URL || "";
+const BOOKFUNNEL_EBOOK_URL = process.env.BOOKFUNNEL_EBOOK_URL || "";
 const ENABLE_STRIPE_TAX = String(process.env.ENABLE_STRIPE_TAX || "true") === "true";
 const SHIPPING_RATE_UNDER_THRESHOLD = 599;
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -378,85 +378,6 @@ async function retrieveCheckoutSession(sessionId) {
   return stripeRequest(`/v1/checkout/sessions/${encodeURIComponent(sessionId)}`);
 }
 
-async function updateCheckoutSessionMetadata(sessionId, metadata) {
-  const params = new URLSearchParams();
-  Object.entries(metadata).forEach(([key, value]) => {
-    params.set(`metadata[${key}]`, String(value));
-  });
-
-  return stripeRequest(`/v1/checkout/sessions/${encodeURIComponent(sessionId)}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params.toString(),
-  });
-}
-
-function splitCustomerName(name) {
-  const trimmed = String(name || "").trim();
-  if (!trimmed) return { firstName: "", lastName: "" };
-  const [firstName, ...rest] = trimmed.split(/\s+/);
-  return {
-    firstName,
-    lastName: rest.join(" "),
-  };
-}
-
-async function triggerBookfunnelDelivery(order) {
-  if (!order.ebookDeliveryQuantity) {
-    return;
-  }
-
-  if (!BOOKFUNNEL_ZAPIER_WEBHOOK_URL) {
-    console.log("BookFunnel delivery skipped: missing BOOKFUNNEL_ZAPIER_WEBHOOK_URL.");
-    return;
-  }
-
-  if (!order.customerEmail) {
-    throw new Error("Cannot fulfill ebook delivery without a customer email address.");
-  }
-
-  const latestSession = await retrieveCheckoutSession(order.sessionId);
-  if (latestSession.metadata?.bookfunnel_fulfilled_at) {
-    return;
-  }
-
-  const { firstName, lastName } = splitCustomerName(order.customerName);
-  const payload = {
-    sessionId: order.sessionId,
-    transactionId: order.sessionId,
-    orderNumber: order.sessionId,
-    email: order.customerEmail,
-    firstName,
-    lastName,
-    itemName: `${latestSession.metadata?.ebook_delivery_title || "Sailing to Chayah: A Desperate Journey"} (${latestSession.metadata?.ebook_delivery_format || "EBook"})`,
-    itemSku: "sailing-to-chayah-ebook",
-    quantity: 1,
-    fulfillmentSource: latestSession.metadata?.ebook_delivery_source || order.ebookDeliverySource,
-    total: typeof order.amountTotal === "number" ? (order.amountTotal / 100).toFixed(2) : "0.00",
-    currency: String(order.currency || "usd").toUpperCase(),
-  };
-
-  const response = await fetch(BOOKFUNNEL_ZAPIER_WEBHOOK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!response.ok) {
-    throw new Error(`BookFunnel webhook failed: ${await response.text()}`);
-  }
-
-  await updateCheckoutSessionMetadata(order.sessionId, {
-    bookfunnel_fulfilled_at: new Date().toISOString(),
-    bookfunnel_fulfillment_status: "sent",
-    bookfunnel_fulfillment_session_id: order.sessionId,
-  });
-}
-
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, DOMAIN);
 
@@ -487,11 +408,31 @@ const server = http.createServer(async (req, res) => {
 
       if (event.type === "checkout.session.completed") {
         const order = recordCompletedOrder(event.data.object);
-        await triggerBookfunnelDelivery(order);
         await sendAdminOrderEmail(order);
       }
 
       return json(res, 200, { received: true });
+    } catch (error) {
+      return json(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/checkout-session-access") {
+    try {
+      const sessionId = url.searchParams.get("session_id") || "";
+      if (!sessionId) {
+        return json(res, 400, { error: "Missing session_id." });
+      }
+
+      const session = await retrieveCheckoutSession(sessionId);
+      const ebookEligible =
+        session.payment_status === "paid" &&
+        Math.max(0, Number(session.metadata?.ebook_delivery_quantity || 0)) > 0;
+
+      return json(res, 200, {
+        ebookEligible,
+        ebookUrl: ebookEligible ? BOOKFUNNEL_EBOOK_URL : "",
+      });
     } catch (error) {
       return json(res, 400, { error: error.message });
     }

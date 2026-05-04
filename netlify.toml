@@ -11,3 +11,8 @@
   from = "/api/stripe-webhook"
   to = "/.netlify/functions/stripe-webhook"
   status = 200
+
+[[redirects]]
+  from = "/api/checkout-session-access"
+  to = "/.netlify/functions/checkout-session-access"
+  status = 200

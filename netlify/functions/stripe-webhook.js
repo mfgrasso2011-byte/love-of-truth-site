@@ -3,7 +3,6 @@ const {
   recordCompletedOrder,
   response,
   sendAdminOrderEmail,
-  triggerBookfunnelDelivery,
   verifyStripeSignature,
 } = require("./_lib");
 
@@ -20,7 +19,6 @@ exports.handler = async function handler(event) {
     if (parsed.type === "checkout.session.completed") {
       const order = recordCompletedOrder(parsed.data.object);
       console.log("Stripe order recorded:", order);
-      await triggerBookfunnelDelivery(order, getConfig());
       await sendAdminOrderEmail(order, getConfig());
     }
 

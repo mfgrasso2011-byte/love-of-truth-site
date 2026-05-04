@@ -16,6 +16,9 @@ const cartShippingNode = document.querySelector("[data-cart-shipping]");
 const cartFeedback = document.querySelector("[data-cart-feedback]");
 const checkoutButton = document.querySelector("[data-checkout-button]");
 const shippingStatusNode = document.querySelector("[data-shipping-status]");
+const ebookAccessNode = document.querySelector("[data-ebook-access]");
+const ebookLinkNode = document.querySelector("[data-ebook-link]");
+const ebookAccessMessageNode = document.querySelector("[data-ebook-access-message]");
 
 const CART_KEY = "love-of-truth-cart";
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -221,6 +224,50 @@ async function beginCheckout() {
   }
 }
 
+async function loadEbookAccess() {
+  if (!ebookAccessNode || !ebookLinkNode) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get("session_id");
+  if (!sessionId) {
+    if (ebookAccessMessageNode) {
+      ebookAccessMessageNode.textContent =
+        "If your order includes the ebook, the download link will appear here once your payment is confirmed.";
+    }
+    return;
+  }
+
+  if (ebookAccessMessageNode) {
+    ebookAccessMessageNode.textContent = "Checking your ebook access...";
+  }
+
+  try {
+    const response = await fetch(
+      `/api/checkout-session-access?session_id=${encodeURIComponent(sessionId)}`
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Unable to load ebook access.");
+    }
+
+    if (data.ebookEligible && data.ebookUrl) {
+      ebookLinkNode.href = data.ebookUrl;
+      ebookAccessNode.hidden = false;
+      if (ebookAccessMessageNode) ebookAccessMessageNode.textContent = "";
+      return;
+    }
+
+    if (ebookAccessMessageNode) {
+      ebookAccessMessageNode.textContent = "This order does not include the ebook.";
+    }
+  } catch (error) {
+    if (ebookAccessMessageNode) {
+      ebookAccessMessageNode.textContent = error.message;
+    }
+  }
+}
+
 let currentSlide = 0;
 let autoplayId;
 
@@ -290,6 +337,7 @@ formatInputs.forEach((input) => {
 
 addToCartButton?.addEventListener("click", addCurrentProductToCart);
 checkoutButton?.addEventListener("click", beginCheckout);
+loadEbookAccess();
 
 if (window.location.pathname.endsWith("success.html")) {
   writeCart([]);
