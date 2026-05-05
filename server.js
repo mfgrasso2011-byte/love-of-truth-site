@@ -186,6 +186,63 @@ async function sendAdminOrderEmail(order) {
   }
 }
 
+async function sendCustomerOrderEmail(order) {
+  if (!RESEND_API_KEY || !ORDER_FROM_EMAIL || !order.customerEmail) {
+    console.log("Customer email skipped: missing Resend configuration or customer email.");
+    return;
+  }
+
+  const amount = typeof order.amountTotal === "number" ? (order.amountTotal / 100).toFixed(2) : "0.00";
+  const shipping = order.shippingDetails?.address
+    ? [
+        order.shippingDetails.name,
+        order.shippingDetails.address.line1,
+        order.shippingDetails.address.line2,
+        `${order.shippingDetails.address.city || ""}, ${order.shippingDetails.address.state || ""} ${order.shippingDetails.address.postal_code || ""}`.trim(),
+        order.shippingDetails.address.country,
+      ]
+        .filter(Boolean)
+        .join("<br />")
+    : "";
+  const ebookMessage =
+    order.ebookDeliveryQuantity > 0 && BOOKFUNNEL_EBOOK_URL
+      ? `
+        <p>Your order includes the ebook. You can access it here:</p>
+        <p><a href="${BOOKFUNNEL_EBOOK_URL}">Open your ebook on BookFunnel</a></p>
+      `
+      : "";
+  const shippingMessage = shipping
+    ? `<p><strong>Shipping address:</strong><br />${shipping}</p>`
+    : "";
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: ORDER_FROM_EMAIL,
+      to: [order.customerEmail],
+      subject: "Your Love of Truth order confirmation",
+      html: `
+        <h1>Thank you for your order.</h1>
+        <p>We received your order and payment successfully.</p>
+        <p><strong>Order ID:</strong> ${order.sessionId}</p>
+        <p><strong>Total:</strong> $${amount} ${String(order.currency || "usd").toUpperCase()}</p>
+        ${shippingMessage}
+        ${ebookMessage}
+        <p>If you have any questions, just reply to this email.</p>
+      `,
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.text();
+    throw new Error(`Resend customer email failed: ${data}`);
+  }
+}
+
 function sendFile(res, filepath) {
   const ext = path.extname(filepath).toLowerCase();
   const type = MIME_TYPES[ext] || "application/octet-stream";
@@ -409,6 +466,7 @@ const server = http.createServer(async (req, res) => {
       if (event.type === "checkout.session.completed") {
         const order = recordCompletedOrder(event.data.object);
         await sendAdminOrderEmail(order);
+        await sendCustomerOrderEmail(order);
       }
 
       return json(res, 200, { received: true });

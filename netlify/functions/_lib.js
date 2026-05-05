@@ -307,6 +307,63 @@ async function sendAdminOrderEmail(order, config) {
   }
 }
 
+async function sendCustomerOrderEmail(order, config) {
+  if (!config.resendApiKey || !config.orderFromEmail || !order.customerEmail) {
+    console.log("Customer email skipped: missing Resend configuration or customer email.");
+    return;
+  }
+
+  const amount =
+    typeof order.amountTotal === "number" ? (order.amountTotal / 100).toFixed(2) : "0.00";
+  const shipping = order.shippingDetails?.address
+    ? [
+        order.shippingDetails.name,
+        order.shippingDetails.address.line1,
+        order.shippingDetails.address.line2,
+        `${order.shippingDetails.address.city || ""}, ${order.shippingDetails.address.state || ""} ${order.shippingDetails.address.postal_code || ""}`.trim(),
+        order.shippingDetails.address.country,
+      ]
+        .filter(Boolean)
+        .join("<br />")
+    : "";
+  const ebookMessage =
+    order.ebookDeliveryQuantity > 0 && config.bookfunnelEbookUrl
+      ? `
+        <p>Your order includes the ebook. You can access it here:</p>
+        <p><a href="${config.bookfunnelEbookUrl}">Open your ebook on BookFunnel</a></p>
+      `
+      : "";
+  const shippingMessage = shipping
+    ? `<p><strong>Shipping address:</strong><br />${shipping}</p>`
+    : "";
+
+  const resendResponse = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${config.resendApiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: config.orderFromEmail,
+      to: [order.customerEmail],
+      subject: "Your Love of Truth order confirmation",
+      html: `
+        <h1>Thank you for your order.</h1>
+        <p>We received your order and payment successfully.</p>
+        <p><strong>Order ID:</strong> ${order.sessionId}</p>
+        <p><strong>Total:</strong> $${amount} ${String(order.currency || "usd").toUpperCase()}</p>
+        ${shippingMessage}
+        ${ebookMessage}
+        <p>If you have any questions, just reply to this email.</p>
+      `,
+    }),
+  });
+
+  if (!resendResponse.ok) {
+    throw new Error(`Resend customer email failed: ${await resendResponse.text()}`);
+  }
+}
+
 module.exports = {
   getConfig,
   response,
@@ -316,4 +373,5 @@ module.exports = {
   verifyStripeSignature,
   recordCompletedOrder,
   sendAdminOrderEmail,
+  sendCustomerOrderEmail,
 };

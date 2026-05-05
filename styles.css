@@ -1150,6 +1150,10 @@ select {
     --container: min(100vw - 28px, 1180px);
   }
 
+  .header-inner {
+    gap: 12px;
+  }
+
   .brand {
     gap: 8px;
     max-width: 220px;
@@ -1164,7 +1168,19 @@ select {
   }
 
   .header-actions {
-    display: none;
+    display: flex;
+    justify-self: end;
+    gap: 8px;
+  }
+
+  .header-actions a {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-actions svg {
+    width: 17px;
+    height: 17px;
   }
 
   .slide-copy {
