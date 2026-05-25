@@ -19,6 +19,7 @@ const shippingStatusNode = document.querySelector("[data-shipping-status]");
 const ebookAccessNode = document.querySelector("[data-ebook-access]");
 const ebookLinkNode = document.querySelector("[data-ebook-link]");
 const ebookAccessMessageNode = document.querySelector("[data-ebook-access-message]");
+const ebookAccessCopyNode = document.querySelector("[data-ebook-access-copy]");
 
 const CART_KEY = "love-of-truth-cart";
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -255,6 +256,13 @@ async function loadEbookAccess() {
       ebookLinkNode.href = data.ebookUrl;
       ebookAccessNode.hidden = false;
       if (ebookAccessMessageNode) ebookAccessMessageNode.textContent = "";
+      if (ebookAccessCopyNode) {
+        ebookAccessCopyNode.textContent =
+          "Your order includes the ebook. Redirecting you to BookFunnel now. If nothing happens, use the button below.";
+      }
+      window.setTimeout(() => {
+        window.location.href = data.ebookUrl;
+      }, 1200);
       return;
     }
 
