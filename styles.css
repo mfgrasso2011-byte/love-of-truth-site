@@ -339,6 +339,15 @@ select {
   margin-top: 28px;
 }
 
+.homepage-newsletter {
+  padding: 0 0 52px;
+}
+
+.homepage-newsletter-inner {
+  display: flex;
+  justify-content: center;
+}
+
 .hero-carousel {
   position: relative;
   overflow: clip;
@@ -886,6 +895,12 @@ select {
   display: grid;
   grid-template-columns: minmax(0, 1.95fr) minmax(280px, 0.75fr);
   gap: 30px;
+}
+
+.cart-newsletter {
+  margin-top: 42px;
+  display: flex;
+  justify-content: center;
 }
 
 .cart-items,
