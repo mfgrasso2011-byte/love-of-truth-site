@@ -224,9 +224,9 @@ async function sendCustomerOrderEmail(order) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: ORDER_FROM_EMAIL,
+      from: `Love of Truth <${ORDER_FROM_EMAIL}>`,
       to: [order.customerEmail],
-      subject: "Your Love of Truth order confirmation",
+      subject: "Order Confirmation",
       html: `
         <h1>Thank you for your order.</h1>
         <p>We received your order and payment successfully.</p>
