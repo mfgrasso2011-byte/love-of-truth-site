@@ -29,6 +29,7 @@ function getConfig() {
     resendApiKey: process.env.RESEND_API_KEY || "",
     orderFromEmail: process.env.ORDER_FROM_EMAIL || "",
     adminNotifyEmail: process.env.ADMIN_NOTIFY_EMAIL || "",
+    contactToEmail: process.env.CONTACT_TO_EMAIL || "",
     bookfunnelEbookUrl: process.env.BOOKFUNNEL_EBOOK_URL || "",
     enableStripeTax: String(process.env.ENABLE_STRIPE_TAX || "true") === "true",
     shippingCountries: (process.env.SHIPPING_COUNTRIES || "US")
@@ -395,7 +396,7 @@ async function sendCustomerOrderEmail(order, config) {
 }
 
 async function sendContactEmail(submission, config) {
-  if (!config.resendApiKey || !config.orderFromEmail) {
+  if (!config.resendApiKey || !config.orderFromEmail || !config.contactToEmail) {
     throw new Error("Missing Resend configuration.");
   }
 
@@ -407,7 +408,7 @@ async function sendContactEmail(submission, config) {
     },
     body: JSON.stringify({
       from: `Love of Truth <${config.orderFromEmail}>`,
-      to: ["mfgrasso2011@gmail.com"],
+      to: [config.contactToEmail],
       subject: `Website Contact: ${submission.name}`,
       html: `
         <h1>New Contact Message</h1>

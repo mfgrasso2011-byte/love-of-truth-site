@@ -59,7 +59,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const ORDER_FROM_EMAIL = process.env.ORDER_FROM_EMAIL || "";
 const ADMIN_NOTIFY_EMAIL = process.env.ADMIN_NOTIFY_EMAIL || "";
 const BOOKFUNNEL_EBOOK_URL = process.env.BOOKFUNNEL_EBOOK_URL || "";
-const CONTACT_TO_EMAIL = "mfgrasso2011@gmail.com";
+const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || "";
 const ENABLE_STRIPE_TAX = String(process.env.ENABLE_STRIPE_TAX || "true") === "true";
 const SHIPPING_RATE_UNDER_THRESHOLD = 599;
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -277,7 +277,7 @@ function validateContactSubmission(payload) {
 }
 
 async function sendContactEmail(submission) {
-  if (!RESEND_API_KEY || !ORDER_FROM_EMAIL) {
+  if (!RESEND_API_KEY || !ORDER_FROM_EMAIL || !CONTACT_TO_EMAIL) {
     throw new Error("Missing Resend configuration.");
   }
 
