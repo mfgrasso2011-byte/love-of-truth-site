@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>His Kingdom Shall Never End</title>
+    <title>Contact | Love of Truth</title>
     <link rel="icon" type="image/png" href="References/Full%20logo%20no%20text,%20transparent.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -65,44 +65,49 @@
       </div>
     </header>
 
-    <main class="product-page">
-      <section class="product-hero">
-        <div class="container">
-          <div class="product-grid">
-            <div class="product-image-frame">
-              <img
-                class="product-cover"
-                src="References/His%20Kingdom%20Placeholder.png"
-                alt="His Kingdom Shall Never End cover"
-              />
-            </div>
+    <main class="contact-page">
+      <section>
+        <div class="container contact-shell">
+          <div class="contact-header">
+            <p class="contact-kicker">Contact</p>
+            <h1 class="contact-title">Send a Message</h1>
+            <p class="contact-copy">
+              Use the form below to send an email directly to Michael Grasso. If you have
+              a question about the books, the ministry, or an order, this is the simplest
+              way to get in touch.
+            </p>
+          </div>
 
-            <div class="product-copy">
-              <h1 class="product-title">His Kingdom Shall Never End</h1>
-              <p class="product-status">Coming Soon</p>
-              <p class="product-summary">
-                In Acts 2, Peter grounds his messianic interpretation of Psalm 16 in the
-                inherently messianic nature of the promises of the Davidic Covenant.
-                Critical or “mainstream” scholarship, however, argues that essentially the
-                entire Old Testament is devoid of a truly inherent messianic hope. Both
-                cannot be right. If the critical scholars are right, then Peter is wrong.
-              </p>
-              <p class="product-summary">
-                In this book, I show that the entire Old Testament, so far from being
-                devoid of an inherent messianic hope, actually has this hope as its central
-                message. The climactic covenant made with David in 2 Samuel 7 forms the
-                foundation for this proclamation. It is argued that this promise is clearly
-                about the coming of the Messiah in its own context, as is clear from its
-                reuse of messianic prophecies from the Pentateuch.
-              </p>
-              <p class="product-summary">
-                This book is an adaptation of my doctoral dissertation entitled
-                <em>An Everlasting Kingdom and an Eschatological House: Messianism in the
-                Davidic Covenant</em>. It is my prayer that God would use this book to
-                restore the faithful proclamation of this hope in the preaching of the Old
-                Testament, the hope which has been fulfilled in Jesus Christ.
-              </p>
-            </div>
+          <div class="contact-card">
+            <form class="contact-form" data-contact-form>
+              <div class="contact-field">
+                <label for="contact-name">Name</label>
+                <input class="contact-input" id="contact-name" name="name" type="text" required />
+              </div>
+
+              <div class="contact-field">
+                <label for="contact-email">Email</label>
+                <input class="contact-input" id="contact-email" name="email" type="email" required />
+              </div>
+
+              <div class="contact-field">
+                <label for="contact-message">Message</label>
+                <textarea
+                  class="contact-textarea"
+                  id="contact-message"
+                  name="message"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="contact-actions">
+                <button class="button button-gold contact-submit" type="submit" data-contact-submit>
+                  Send Email
+                </button>
+              </div>
+            </form>
+
+            <p class="cart-feedback" data-contact-feedback></p>
           </div>
         </div>
       </section>

@@ -59,6 +59,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const ORDER_FROM_EMAIL = process.env.ORDER_FROM_EMAIL || "";
 const ADMIN_NOTIFY_EMAIL = process.env.ADMIN_NOTIFY_EMAIL || "";
 const BOOKFUNNEL_EBOOK_URL = process.env.BOOKFUNNEL_EBOOK_URL || "";
+const CONTACT_TO_EMAIL = "mfgrasso2011@gmail.com";
 const ENABLE_STRIPE_TAX = String(process.env.ENABLE_STRIPE_TAX || "true") === "true";
 const SHIPPING_RATE_UNDER_THRESHOLD = 599;
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -73,6 +74,19 @@ function json(res, statusCode, payload) {
     "Cache-Control": "no-store",
   });
   res.end(JSON.stringify(payload));
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
 }
 
 function verifyStripeSignature(rawBody, signatureHeader) {
@@ -242,6 +256,53 @@ async function sendCustomerOrderEmail(order) {
   if (!response.ok) {
     const data = await response.text();
     throw new Error(`Resend customer email failed: ${data}`);
+  }
+}
+
+function validateContactSubmission(payload) {
+  const name = String(payload?.name || "").trim();
+  const email = String(payload?.email || "").trim();
+  const message = String(payload?.message || "").trim();
+
+  if (!name) throw new Error("Please enter your name.");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new Error("Please enter a valid email address.");
+  }
+  if (!message) throw new Error("Please enter a message.");
+  if (name.length > 120) throw new Error("Name is too long.");
+  if (email.length > 200) throw new Error("Email is too long.");
+  if (message.length > 5000) throw new Error("Message is too long.");
+
+  return { name, email, message };
+}
+
+async function sendContactEmail(submission) {
+  if (!RESEND_API_KEY || !ORDER_FROM_EMAIL) {
+    throw new Error("Missing Resend configuration.");
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: `Love of Truth <${ORDER_FROM_EMAIL}>`,
+      to: [CONTACT_TO_EMAIL],
+      subject: `Website Contact: ${submission.name}`,
+      html: `
+        <h1>New Contact Message</h1>
+        <p><strong>Name:</strong> ${escapeHtml(submission.name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(submission.email)}</p>
+        <p><strong>Message:</strong><br />${escapeHtml(submission.message).replace(/\n/g, "<br />")}</p>
+      `,
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.text();
+    throw new Error(`Resend contact email failed: ${data}`);
   }
 }
 
@@ -493,6 +554,18 @@ const server = http.createServer(async (req, res) => {
         ebookEligible,
         ebookUrl: ebookEligible ? BOOKFUNNEL_EBOOK_URL : "",
       });
+    } catch (error) {
+      return json(res, 400, { error: error.message });
+    }
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/contact") {
+    try {
+      const body = await collectBody(req);
+      const parsed = JSON.parse(body || "{}");
+      const submission = validateContactSubmission(parsed);
+      await sendContactEmail(submission);
+      return json(res, 200, { message: "Your message has been sent." });
     } catch (error) {
       return json(res, 400, { error: error.message });
     }

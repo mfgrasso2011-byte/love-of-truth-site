@@ -20,6 +20,9 @@ const ebookAccessNode = document.querySelector("[data-ebook-access]");
 const ebookLinkNode = document.querySelector("[data-ebook-link]");
 const ebookAccessMessageNode = document.querySelector("[data-ebook-access-message]");
 const ebookAccessCopyNode = document.querySelector("[data-ebook-access-copy]");
+const contactForm = document.querySelector("[data-contact-form]");
+const contactFeedback = document.querySelector("[data-contact-feedback]");
+const contactSubmitButton = document.querySelector("[data-contact-submit]");
 
 const CART_KEY = "love-of-truth-cart";
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -276,6 +279,52 @@ async function loadEbookAccess() {
   }
 }
 
+async function submitContactForm(event) {
+  event.preventDefault();
+  if (!contactForm) return;
+
+  const formData = new FormData(contactForm);
+  const payload = {
+    name: String(formData.get("name") || "").trim(),
+    email: String(formData.get("email") || "").trim(),
+    message: String(formData.get("message") || "").trim(),
+  };
+
+  if (contactFeedback) {
+    contactFeedback.textContent = "Sending your message...";
+  }
+
+  if (contactSubmitButton) {
+    contactSubmitButton.disabled = true;
+  }
+
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Unable to send your message.");
+    }
+
+    contactForm.reset();
+    if (contactFeedback) {
+      contactFeedback.textContent = data.message || "Your message has been sent.";
+    }
+  } catch (error) {
+    if (contactFeedback) {
+      contactFeedback.textContent = error.message;
+    }
+  } finally {
+    if (contactSubmitButton) {
+      contactSubmitButton.disabled = false;
+    }
+  }
+}
+
 let currentSlide = 0;
 let autoplayId;
 
@@ -345,6 +394,7 @@ formatInputs.forEach((input) => {
 
 addToCartButton?.addEventListener("click", addCurrentProductToCart);
 checkoutButton?.addEventListener("click", beginCheckout);
+contactForm?.addEventListener("submit", submitContactForm);
 loadEbookAccess();
 
 if (window.location.pathname.endsWith("success.html")) {

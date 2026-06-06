@@ -49,6 +49,36 @@ function response(statusCode, payload) {
   };
 }
 
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
+}
+
+function validateContactSubmission(payload) {
+  const name = String(payload?.name || "").trim();
+  const email = String(payload?.email || "").trim();
+  const message = String(payload?.message || "").trim();
+
+  if (!name) throw new Error("Please enter your name.");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new Error("Please enter a valid email address.");
+  }
+  if (!message) throw new Error("Please enter a message.");
+  if (name.length > 120) throw new Error("Name is too long.");
+  if (email.length > 200) throw new Error("Email is too long.");
+  if (message.length > 5000) throw new Error("Message is too long.");
+
+  return { name, email, message };
+}
+
 function validateItems(items) {
   if (!Array.isArray(items) || items.length === 0) {
     throw new Error("Cart is empty.");
@@ -364,9 +394,39 @@ async function sendCustomerOrderEmail(order, config) {
   }
 }
 
+async function sendContactEmail(submission, config) {
+  if (!config.resendApiKey || !config.orderFromEmail) {
+    throw new Error("Missing Resend configuration.");
+  }
+
+  const resendResponse = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${config.resendApiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: `Love of Truth <${config.orderFromEmail}>`,
+      to: ["mfgrasso2011@gmail.com"],
+      subject: `Website Contact: ${submission.name}`,
+      html: `
+        <h1>New Contact Message</h1>
+        <p><strong>Name:</strong> ${escapeHtml(submission.name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(submission.email)}</p>
+        <p><strong>Message:</strong><br />${escapeHtml(submission.message).replace(/\n/g, "<br />")}</p>
+      `,
+    }),
+  });
+
+  if (!resendResponse.ok) {
+    throw new Error(`Resend contact email failed: ${await resendResponse.text()}`);
+  }
+}
+
 module.exports = {
   getConfig,
   response,
+  validateContactSubmission,
   validateItems,
   createCheckoutSession,
   retrieveCheckoutSession,
@@ -374,4 +434,5 @@ module.exports = {
   recordCompletedOrder,
   sendAdminOrderEmail,
   sendCustomerOrderEmail,
+  sendContactEmail,
 };
