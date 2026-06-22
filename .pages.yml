@@ -1,0 +1,111 @@
+media:
+  input: References/sermons
+  output: /References/sermons
+
+content:
+  - name: sermon_archive
+    label: Sermon archive
+    type: file
+    path: content/sermons.json
+    fields:
+      - name: sermons
+        label: Sermons
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title} — {date}"
+        fields:
+          - name: id
+            label: ID
+            type: string
+            readonly: true
+          - name: title
+            label: Title or scripture
+            type: string
+            required: true
+          - name: book
+            label: Book of the Bible
+            type: select
+            options:
+              values:
+                - Genesis
+                - Exodus
+                - Leviticus
+                - Numbers
+                - Deuteronomy
+                - Joshua
+                - Judges
+                - Ruth
+                - 1 Samuel
+                - 2 Samuel
+                - 1 Kings
+                - 2 Kings
+                - 1 Chronicles
+                - 2 Chronicles
+                - Ezra
+                - Nehemiah
+                - Esther
+                - Job
+                - Psalms
+                - Proverbs
+                - Ecclesiastes
+                - Song of Solomon
+                - Isaiah
+                - Jeremiah
+                - Lamentations
+                - Ezekiel
+                - Daniel
+                - Hosea
+                - Joel
+                - Amos
+                - Obadiah
+                - Jonah
+                - Micah
+                - Nahum
+                - Habakkuk
+                - Zephaniah
+                - Haggai
+                - Zechariah
+                - Malachi
+                - Matthew
+                - Mark
+                - Luke
+                - John
+                - Acts
+                - Romans
+                - 1 Corinthians
+                - 2 Corinthians
+                - Galatians
+                - Ephesians
+                - Philippians
+                - Colossians
+                - 1 Thessalonians
+                - 2 Thessalonians
+                - 1 Timothy
+                - 2 Timothy
+                - Titus
+                - Philemon
+                - Hebrews
+                - James
+                - 1 Peter
+                - 2 Peter
+                - 1 John
+                - 2 John
+                - 3 John
+                - Jude
+                - Revelation
+          - name: date
+            label: Date preached
+            type: date
+            required: true
+          - name: description
+            label: Description
+            type: text
+          - name: audioUrl
+            label: MP3 URL
+            type: string
+          - name: sourceUrl
+            label: Original sermon page
+            type: string
+            required: true
