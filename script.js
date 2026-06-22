@@ -23,6 +23,84 @@ const ebookAccessCopyNode = document.querySelector("[data-ebook-access-copy]");
 const contactForm = document.querySelector("[data-contact-form]");
 const contactFeedback = document.querySelector("[data-contact-feedback]");
 const contactSubmitButton = document.querySelector("[data-contact-submit]");
+const youtubePage = document.querySelector("[data-youtube-page]");
+const channelCard = document.querySelector("[data-channel-card]");
+const videoGrid = document.querySelector("[data-video-grid]");
+const youtubeStatus = document.querySelector("[data-youtube-status]");
+const videoDialog = document.querySelector("[data-video-dialog]");
+const videoDialogTitle = document.querySelector("[data-video-dialog-title]");
+const videoPlayer = document.querySelector("[data-video-player]");
+const videoDialogClose = document.querySelector("[data-video-dialog-close]");
+
+const YOUTUBE_PREVIEW_DATA = {
+  channel: {
+    id: "UC4DTiOj4ncwTFGFWB8Rybvw",
+    title: "Love of Truth",
+    description:
+      "Biblical and theological teaching centered on the unity of Scripture and the confession of Christ.",
+    thumbnail: "References/Full%20logo%20no%20text,%20transparent.png",
+    subscriberCount: null,
+    videoCount: null,
+    viewCount: null,
+    url: "https://www.youtube.com/channel/UC4DTiOj4ncwTFGFWB8Rybvw",
+  },
+  videos: [
+    {
+      id: "Hs28cXGqceI",
+      title: "The Unity of Scripture and the Confession of Christ",
+      description: "A representative teaching card used to preview the page before the YouTube API is configured.",
+      publishedAt: "2026-06-18T12:00:00Z",
+      thumbnail: "References/Website%20Slider%20Images/YouTube%20Slider.png",
+      duration: "",
+      viewCount: "1840",
+    },
+    {
+      id: "Hs28cXGqceI",
+      title: "How the Kingdom of God Shapes Christian Hope",
+      description: "A representative teaching card used to demonstrate titles, dates, descriptions, and video duration.",
+      publishedAt: "2026-06-11T12:00:00Z",
+      thumbnail: "References/His%20Kingdom%20Placeholder.png",
+      duration: "",
+      viewCount: "1270",
+    },
+    {
+      id: "Hs28cXGqceI",
+      title: "Reading the Bible as One Coherent Story",
+      description: "The production page will replace this sample automatically with the latest public channel upload.",
+      publishedAt: "2026-06-04T12:00:00Z",
+      thumbnail: "References/Website%20Slider%20Images/Preaching.png",
+      duration: "",
+      viewCount: "965",
+    },
+    {
+      id: "Hs28cXGqceI",
+      title: "Faith, Wisdom, and the Christian Imagination",
+      description: "Sample content for evaluating the responsive three-column video catalog and embedded player.",
+      publishedAt: "2026-05-28T12:00:00Z",
+      thumbnail: "References/Sailing%20to%20Chayah/Sailing%20to%20Chayah%20product%20page%20mockup.png",
+      duration: "",
+      viewCount: "742",
+    },
+    {
+      id: "Hs28cXGqceI",
+      title: "Why Doctrine Matters for Everyday Life",
+      description: "Sample content for evaluating the page without consuming API quota or exposing an API key.",
+      publishedAt: "2026-05-21T12:00:00Z",
+      thumbnail: "References/Website%20Slider%20Images/Preaching%20Slider.png",
+      duration: "",
+      viewCount: "1380",
+    },
+    {
+      id: "Hs28cXGqceI",
+      title: "Truth, Beauty, and the Work of Teaching",
+      description: "This final sample fills out the desktop grid and collapses to a single column on small screens.",
+      publishedAt: "2026-05-14T12:00:00Z",
+      thumbnail: "References/Sailing%20to%20Chayah/A%20Desperate%20Journey%20Ebook%20Cover.jpg",
+      duration: "",
+      viewCount: "610",
+    },
+  ],
+};
 
 const CART_KEY = "love-of-truth-cart";
 const FREE_SHIPPING_THRESHOLD = 4000;
@@ -325,10 +403,198 @@ async function submitContactForm(event) {
   }
 }
 
+function compactNumber(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return "0";
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(number);
+}
+
+function formatVideoDuration(value) {
+  const match = String(value || "").match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!match) return "";
+  const hours = Number(match[1] || 0);
+  const minutes = Number(match[2] || 0);
+  const seconds = Number(match[3] || 0);
+  return hours
+    ? `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+    : `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+function formatPublishedDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+}
+
+function truncateDescription(value, length = 155) {
+  const normalized = String(value || "").replace(/\s+/g, " ").trim();
+  return normalized.length > length ? `${normalized.slice(0, length).trim()}…` : normalized;
+}
+
+function openVideo(video) {
+  if (!videoDialog || !videoPlayer) {
+    window.open(`https://www.youtube.com/watch?v=${video.id}`, "_blank", "noopener");
+    return;
+  }
+
+  if (videoDialogTitle) videoDialogTitle.textContent = video.title;
+  const iframe = document.createElement("iframe");
+  iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(video.id)}?autoplay=1&rel=0`;
+  iframe.title = video.title;
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  iframe.allowFullscreen = true;
+  videoPlayer.replaceChildren(iframe);
+  videoDialog.showModal();
+}
+
+function closeVideo() {
+  videoDialog?.close();
+  videoPlayer?.replaceChildren();
+}
+
+function renderChannel(channel) {
+  if (!channelCard) return;
+
+  const avatar = document.createElement("img");
+  avatar.className = "channel-avatar";
+  avatar.src = channel.thumbnail;
+  avatar.alt = `${channel.title} channel profile`;
+
+  const summary = document.createElement("div");
+  summary.className = "channel-summary";
+  const title = document.createElement("h2");
+  title.textContent = channel.title;
+  const stats = document.createElement("p");
+  stats.className = "channel-stats";
+  const statParts = [];
+  if (channel.subscriberCount) statParts.push(`${compactNumber(channel.subscriberCount)} subscribers`);
+  if (channel.videoCount) statParts.push(`${compactNumber(channel.videoCount)} videos`);
+  if (channel.viewCount) statParts.push(`${compactNumber(channel.viewCount)} views`);
+  stats.textContent = statParts.join("  •  ");
+  const description = document.createElement("p");
+  description.className = "channel-description";
+  description.textContent = truncateDescription(channel.description, 220);
+  summary.append(title);
+  if (statParts.length) summary.append(stats);
+  summary.append(description);
+
+  const subscribe = document.createElement("a");
+  subscribe.className = "youtube-subscribe-button";
+  subscribe.href = `${channel.url}?sub_confirmation=1`;
+  subscribe.target = "_blank";
+  subscribe.rel = "noreferrer";
+  subscribe.textContent = "YouTube";
+
+  channelCard.replaceChildren(avatar, summary, subscribe);
+}
+
+function renderVideos(videos) {
+  if (!videoGrid) return;
+  const fragment = document.createDocumentFragment();
+
+  videos.forEach((video) => {
+    const article = document.createElement("article");
+    article.className = "video-card";
+
+    const trigger = document.createElement("button");
+    trigger.className = "video-thumbnail-button";
+    trigger.type = "button";
+    trigger.setAttribute("aria-label", `Play ${video.title}`);
+    trigger.addEventListener("click", () => openVideo(video));
+
+    const thumbnail = document.createElement("img");
+    thumbnail.src = video.thumbnail;
+    thumbnail.alt = "";
+    thumbnail.loading = "lazy";
+    thumbnail.width = 480;
+    thumbnail.height = 270;
+    const play = document.createElement("span");
+    play.className = "video-play-icon";
+    play.setAttribute("aria-hidden", "true");
+    const duration = document.createElement("span");
+    duration.className = "video-duration";
+    duration.textContent = formatVideoDuration(video.duration);
+    trigger.append(thumbnail, play, duration);
+
+    const body = document.createElement("div");
+    body.className = "video-card-body";
+    const title = document.createElement("h3");
+    const titleButton = document.createElement("button");
+    titleButton.type = "button";
+    titleButton.textContent = video.title;
+    titleButton.addEventListener("click", () => openVideo(video));
+    title.append(titleButton);
+    const meta = document.createElement("p");
+    meta.className = "video-meta";
+    const metaParts = [formatPublishedDate(video.publishedAt)];
+    if (video.viewCount) metaParts.push(`${compactNumber(video.viewCount)} views`);
+    meta.textContent = metaParts.filter(Boolean).join("  •  ");
+    const description = document.createElement("p");
+    description.className = "video-description";
+    description.textContent = truncateDescription(video.description);
+    body.append(title, meta, description);
+    article.append(trigger, body);
+    fragment.append(article);
+  });
+
+  videoGrid.replaceChildren(fragment);
+}
+
+async function loadYouTubeFeed() {
+  if (!youtubePage) return;
+
+  try {
+    const isPreview = new URLSearchParams(window.location.search).get("preview") === "1";
+    if (isPreview) {
+      renderChannel(YOUTUBE_PREVIEW_DATA.channel);
+      renderVideos(YOUTUBE_PREVIEW_DATA.videos);
+      if (youtubeStatus) {
+        youtubeStatus.classList.add("is-preview");
+        youtubeStatus.textContent =
+          "Local preview data — the deployed page will use your current YouTube channel information.";
+      }
+      return;
+    }
+
+    const response = await fetch("/api/youtube-feed");
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Unable to load the YouTube channel.");
+
+    renderChannel(data.channel);
+    renderVideos(data.videos || []);
+    if (youtubeStatus) {
+      youtubeStatus.textContent = data.videos?.length ? "" : "No public videos were found.";
+    }
+  } catch (error) {
+    const loadingMessage = channelCard?.querySelector(".channel-loading");
+    if (loadingMessage) loadingMessage.textContent = "Latest videos are temporarily unavailable.";
+    if (youtubeStatus) {
+      youtubeStatus.innerHTML = "";
+      const message = document.createElement("p");
+      message.textContent = error.message;
+      const link = document.createElement("a");
+      link.href = "https://www.youtube.com/channel/UC4DTiOj4ncwTFGFWB8Rybvw";
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = "Watch on YouTube instead";
+      youtubeStatus.append(message, link);
+    }
+  }
+}
+
 let currentSlide = 0;
 let autoplayId;
 
 function setActiveSlide(index) {
+  if (!slides.length) return;
   currentSlide = (index + slides.length) % slides.length;
 
   slides.forEach((slide, slideIndex) => {
@@ -341,6 +607,7 @@ function setActiveSlide(index) {
 }
 
 function startAutoplay() {
+  if (!slides.length) return;
   stopAutoplay();
   autoplayId = window.setInterval(() => {
     setActiveSlide(currentSlide + 1);
@@ -395,7 +662,13 @@ formatInputs.forEach((input) => {
 addToCartButton?.addEventListener("click", addCurrentProductToCart);
 checkoutButton?.addEventListener("click", beginCheckout);
 contactForm?.addEventListener("submit", submitContactForm);
+videoDialogClose?.addEventListener("click", closeVideo);
+videoDialog?.addEventListener("click", (event) => {
+  if (event.target === videoDialog) closeVideo();
+});
+videoDialog?.addEventListener("close", () => videoPlayer?.replaceChildren());
 loadEbookAccess();
+loadYouTubeFeed();
 
 if (window.location.pathname.endsWith("success.html")) {
   writeCart([]);

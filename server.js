@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const { URL, URLSearchParams } = require("url");
+const { getYouTubeFeed } = require("./youtube-feed");
 
 const MIME_TYPES = {
   ".css": "text/css; charset=utf-8",
@@ -506,6 +507,17 @@ const server = http.createServer(async (req, res) => {
       publishableKey: STRIPE_PUBLISHABLE_KEY,
       checkoutEnabled: Boolean(STRIPE_SECRET_KEY && STRIPE_PUBLISHABLE_KEY),
     });
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/youtube-feed") {
+    try {
+      const feed = await getYouTubeFeed({
+        channelId: process.env.YOUTUBE_CHANNEL_ID,
+      });
+      return json(res, 200, feed);
+    } catch (error) {
+      return json(res, 503, { error: error.message });
+    }
   }
 
   if (req.method === "POST" && url.pathname === "/api/create-checkout-session") {

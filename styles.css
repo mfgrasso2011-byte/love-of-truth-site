@@ -132,6 +132,14 @@ select {
   transform: scaleX(1);
 }
 
+.site-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.site-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
 .nav-dropdown-menu {
   position: absolute;
   top: calc(100% + 10px);
@@ -1553,5 +1561,418 @@ select {
   .slide-youtube {
     --button-left-mobile: 35%;
     --button-bottom-mobile: 104px;
+  }
+}
+
+/* Teaching / YouTube catalog */
+.teaching-page {
+  min-height: calc(100vh - 78px);
+  padding-bottom: 100px;
+  background: linear-gradient(180deg, #f8f4ee 0, #fff 48%, #f8f4ee 100%);
+}
+
+.teaching-hero {
+  min-height: 360px;
+  padding: 76px 0 128px;
+  color: #fff;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.12), transparent 38%),
+    linear-gradient(135deg, #112f27, #1d493c 52%, #14372e);
+}
+
+.teaching-hero-inner {
+  max-width: 780px;
+}
+
+.teaching-kicker {
+  margin: 0 0 8px;
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.83rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.82;
+}
+
+.teaching-hero h1 {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(4.5rem, 9vw, 7.5rem);
+  font-weight: 600;
+  line-height: 0.92;
+}
+
+.teaching-hero p:last-child {
+  max-width: 680px;
+  margin: 24px auto 0;
+  font-size: clamp(0.98rem, 1.6vw, 1.15rem);
+  line-height: 1.75;
+  opacity: 0.9;
+}
+
+.channel-shell {
+  position: relative;
+  z-index: 2;
+  margin-top: -92px;
+  padding: 0 34px 48px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 20px 52px rgba(40, 47, 51, 0.14);
+}
+
+.channel-card {
+  display: grid;
+  grid-template-columns: 144px minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  min-height: 190px;
+  padding: 24px 6px 20px;
+  border-bottom: 1px solid rgba(99, 58, 34, 0.12);
+}
+
+.channel-avatar,
+.channel-avatar-placeholder {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface-deep);
+  box-shadow: 0 8px 22px rgba(48, 24, 14, 0.16);
+}
+
+.channel-summary h2 {
+  margin: 0 0 10px;
+  font-family: "Work Sans", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  font-weight: 500;
+}
+
+.channel-loading,
+.channel-stats,
+.channel-description {
+  margin: 0;
+  color: #676767;
+  font-family: "Work Sans", sans-serif;
+}
+
+.channel-stats {
+  font-size: 0.93rem;
+}
+
+.channel-description {
+  max-width: 800px;
+  margin-top: 16px;
+  color: #2e2e2e;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.youtube-subscribe-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 5px;
+  background: #e62117;
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(230, 33, 23, 0.2);
+}
+
+.youtube-subscribe-button::before {
+  content: "▶";
+  margin-right: 9px;
+  font-size: 0.7rem;
+}
+
+.video-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 42px 0 26px;
+}
+
+.video-section-heading h2 {
+  margin: 0;
+  font-family: "Work Sans", sans-serif;
+  font-size: 1.35rem;
+}
+
+.video-section-heading a,
+.video-status a {
+  color: var(--gold-3);
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.video-status {
+  color: var(--ink-soft);
+  font-family: "Work Sans", sans-serif;
+  line-height: 1.6;
+}
+
+.video-status p {
+  margin: 0 0 8px;
+}
+
+.video-status.is-preview {
+  margin: -10px 0 26px;
+  padding: 11px 14px;
+  border: 1px solid rgba(184, 137, 51, 0.25);
+  border-radius: 6px;
+  background: rgba(215, 187, 116, 0.12);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 42px 28px;
+}
+
+.video-card {
+  min-width: 0;
+}
+
+.video-thumbnail-button {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 8px;
+  background: #1c1714;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(41, 27, 20, 0.14);
+}
+
+.video-thumbnail-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.video-thumbnail-button:hover img,
+.video-thumbnail-button:focus-visible img {
+  opacity: 0.84;
+  transform: scale(1.025);
+}
+
+.video-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(230, 33, 23, 0.92);
+  transform: translate(-50%, -50%);
+}
+
+.video-play-icon::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 26px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 16px solid #fff;
+}
+
+.video-duration {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  background: rgba(17, 17, 17, 0.84);
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.76rem;
+}
+
+.video-duration:empty {
+  display: none;
+}
+
+.video-card-body {
+  padding-top: 17px;
+}
+
+.video-card h3 {
+  margin: 0;
+  font-family: "Work Sans", sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.4;
+}
+
+.video-card h3 button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.video-card h3 button:hover,
+.video-card h3 button:focus-visible {
+  color: var(--gold-3);
+}
+
+.video-meta,
+.video-description {
+  color: #6b6b6b;
+  font-family: "Work Sans", sans-serif;
+}
+
+.video-meta {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+}
+
+.video-description {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.video-dialog {
+  width: min(1040px, calc(100vw - 32px));
+  max-width: none;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 12px;
+  background: #15110f;
+  color: #fff;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5);
+}
+
+.video-dialog::backdrop {
+  background: rgba(18, 12, 9, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+.video-dialog-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 58px;
+  padding: 10px 14px 10px 20px;
+}
+
+.video-dialog-bar h2 {
+  margin: 0;
+  overflow: hidden;
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.video-dialog-bar button {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.video-player-frame {
+  aspect-ratio: 16 / 9;
+}
+
+.video-player-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 960px) {
+  .channel-card {
+    grid-template-columns: 112px minmax(0, 1fr);
+  }
+
+  .channel-avatar,
+  .channel-avatar-placeholder {
+    width: 104px;
+    height: 104px;
+  }
+
+  .youtube-subscribe-button {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .video-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .teaching-hero {
+    min-height: 310px;
+    padding: 60px 0 112px;
+  }
+
+  .channel-shell {
+    width: calc(100% - 20px);
+    margin-top: -70px;
+    padding: 0 16px 34px;
+  }
+
+  .channel-card {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 16px;
+    padding: 22px 0;
+  }
+
+  .channel-avatar,
+  .channel-avatar-placeholder {
+    width: 74px;
+    height: 74px;
+  }
+
+  .channel-description {
+    grid-column: 1 / -1;
+  }
+
+  .youtube-subscribe-button {
+    grid-column: 1 / -1;
+  }
+
+  .video-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 30px;
+  }
+
+  .video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-description {
+    display: none;
   }
 }
