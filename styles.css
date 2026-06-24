@@ -1946,15 +1946,18 @@ select {
   }
 
   .latest-teaching-heading {
-    top: 14px;
+    top: 0;
+    align-content: center;
     gap: 8px;
     width: 100%;
-    padding: 0 42px;
+    height: 16%;
+    padding: 6px 30px;
+    background: #15120f;
   }
 
   .latest-teaching-kicker {
-    font-size: clamp(0.9rem, 4.8vw, 1.2rem);
-    letter-spacing: 0.1em;
+    font-size: clamp(0.86rem, 4.3vw, 1.1rem);
+    letter-spacing: 0.08em;
   }
 
   .latest-teaching-rule {
@@ -1968,8 +1971,8 @@ select {
 
   .latest-teaching-media {
     position: absolute;
-    inset: 0 0 auto;
-    height: 52%;
+    inset: 16% 0 auto;
+    height: 40%;
     aspect-ratio: auto;
     border: 0;
     border-bottom: 1px solid rgba(215, 187, 116, 0.7);
@@ -1995,7 +1998,7 @@ select {
 
   .latest-teaching-copy {
     position: absolute;
-    top: 52%;
+    top: 56%;
     right: 0;
     bottom: 0;
     left: 0;
