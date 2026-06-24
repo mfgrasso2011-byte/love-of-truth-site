@@ -1905,7 +1905,7 @@ select {
 
   .preaching-slide-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 56% 44%;
+    grid-template-rows: 52% 48%;
   }
 
   .preaching-slide-video {
@@ -1914,7 +1914,7 @@ select {
 
   .preaching-slide-panel {
     place-items: start center;
-    padding: 24px 28px 72px;
+    padding: 14px 20px 56px;
     text-align: center;
   }
 
@@ -1927,30 +1927,38 @@ select {
   }
 
   .slide-preaching h2 {
-    font-size: clamp(2.25rem, 10vw, 3.15rem);
-    line-height: 0.88;
+    font-size: clamp(1.55rem, 7.2vw, 2.1rem);
+    line-height: 0.92;
   }
 
   .preaching-slide-action {
-    min-height: 42px;
-    margin-top: 18px;
-    padding: 0 20px;
-    font-size: 1.12rem;
+    min-width: 0;
+    min-height: 34px;
+    margin-top: 10px;
+    padding: 0 14px;
+    font-size: 0.92rem;
   }
 
   .latest-teaching-inner {
+    height: 100%;
+    min-height: 0;
     padding: 0;
   }
 
   .latest-teaching-heading {
-    top: 24px;
+    top: 14px;
+    gap: 8px;
     width: 100%;
-    padding: 0 58px;
+    padding: 0 42px;
   }
 
   .latest-teaching-kicker {
-    font-size: clamp(1.15rem, 5.8vw, 1.65rem);
-    letter-spacing: 0.12em;
+    font-size: clamp(0.9rem, 4.8vw, 1.2rem);
+    letter-spacing: 0.1em;
+  }
+
+  .latest-teaching-rule {
+    width: 44px;
   }
 
   .latest-teaching-layout {
@@ -1960,34 +1968,44 @@ select {
 
   .latest-teaching-media {
     position: absolute;
-    inset: 0;
+    inset: 0 0 auto;
+    height: 52%;
     aspect-ratio: auto;
     border: 0;
+    border-bottom: 1px solid rgba(215, 187, 116, 0.7);
   }
 
   .latest-teaching-media::after {
-    background: linear-gradient(0deg, rgba(9, 8, 7, 0.96) 8%, rgba(9, 8, 7, 0.58) 58%, rgba(9, 8, 7, 0.12));
+    background: linear-gradient(0deg, rgba(9, 8, 7, 0.32), transparent 58%);
   }
 
   .latest-teaching-play {
-    top: 38%;
-    width: 64px;
-    height: 46px;
+    top: 60%;
+    width: 56px;
+    height: 40px;
   }
 
   .latest-teaching-play::after {
-    top: 13px;
-    left: 27px;
-    border-top-width: 10px;
-    border-bottom-width: 10px;
-    border-left-width: 16px;
+    top: 11px;
+    left: 23px;
+    border-top-width: 9px;
+    border-bottom-width: 9px;
+    border-left-width: 14px;
   }
 
   .latest-teaching-copy {
     position: absolute;
-    right: 18px;
-    bottom: 62px;
-    left: 18px;
+    top: 52%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 14px 22px 58px;
+    background: linear-gradient(135deg, #211d17, #0c0c0b);
+    text-align: center;
   }
 
   .latest-teaching-description,
@@ -1997,13 +2015,29 @@ select {
   }
 
   .slide-latest-teaching h2 {
-    max-width: 17ch;
-    margin-bottom: 14px;
-    font-size: clamp(1.8rem, 9vw, 2.7rem);
+    max-width: none;
+    margin-bottom: 10px;
+    font-size: clamp(1.22rem, 6vw, 1.55rem);
+    line-height: 1;
+  }
+
+  .latest-teaching-phrase {
+    white-space: nowrap;
+  }
+
+  .latest-teaching-and {
+    margin: 0.06em 0 0.1em;
   }
 
   .latest-teaching-actions {
     margin-top: 0;
+  }
+
+  .latest-teaching-actions .button {
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 14px;
+    font-size: 0.72rem;
   }
 }
 
