@@ -33,7 +33,6 @@ const videoPlayer = document.querySelector("[data-video-player]");
 const videoDialogClose = document.querySelector("[data-video-dialog-close]");
 const latestTeaching = document.querySelector("[data-latest-teaching]");
 const latestTeachingThumbnail = document.querySelector("[data-latest-teaching-thumbnail]");
-const latestTeachingTitle = document.querySelector("[data-latest-teaching-title]");
 const latestTeachingDescription = document.querySelector("[data-latest-teaching-description]");
 const latestTeachingDate = document.querySelector("[data-latest-teaching-date]");
 const latestTeachingWatchLinks = Array.from(document.querySelectorAll("[data-latest-teaching-watch]"));
@@ -603,7 +602,6 @@ function renderLatestTeaching(video) {
     latestTeachingThumbnail.src = video.thumbnail;
     latestTeachingThumbnail.alt = `${video.title} video thumbnail`;
   }
-  if (latestTeachingTitle) latestTeachingTitle.textContent = video.title;
   if (latestTeachingDescription) {
     latestTeachingDescription.textContent = truncateDescription(video.description, 190)
       || "Watch the newest biblical and theological teaching from Love of Truth.";
@@ -643,7 +641,17 @@ function setActiveSlide(index) {
   currentSlide = (index + slides.length) % slides.length;
 
   slides.forEach((slide, slideIndex) => {
-    slide.classList.toggle("is-active", slideIndex === currentSlide);
+    const isActive = slideIndex === currentSlide;
+    slide.classList.toggle("is-active", isActive);
+
+    const slideVideo = slide.querySelector("[data-slide-video]");
+    if (slideVideo) {
+      if (isActive) {
+        slideVideo.play().catch(() => {});
+      } else {
+        slideVideo.pause();
+      }
+    }
   });
 
   dots.forEach((dot, dotIndex) => {

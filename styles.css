@@ -476,8 +476,126 @@ select {
 }
 
 .slide-preaching {
-  --button-left: 69%;
-  --button-top: 70%;
+  filter: none;
+  background: #641f28;
+}
+
+.preaching-slide-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 56%) minmax(0, 44%);
+  width: 100%;
+  height: 100%;
+}
+
+.preaching-slide-media {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: #17100f;
+}
+
+.preaching-slide-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(22, 8, 8, 0.08), transparent 24%, transparent 82%, rgba(49, 11, 16, 0.2)),
+    linear-gradient(180deg, transparent 68%, rgba(20, 7, 8, 0.18));
+}
+
+.preaching-slide-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.preaching-slide-panel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(48px, 6vw, 92px) clamp(38px, 5vw, 82px) 100px;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.055), transparent 32%),
+    #641f28;
+}
+
+.preaching-slide-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.preaching-slide-message {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 520px);
+}
+
+.slide-preaching h2 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(3rem, 5vw, 5.6rem);
+  line-height: 0.9;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.preaching-line {
+  display: block;
+  padding-bottom: 0.09em;
+  overflow: hidden;
+}
+
+.preaching-line > span {
+  display: block;
+  opacity: 0;
+  transform: translateY(115%);
+}
+
+.slide-preaching.is-active .preaching-line > span {
+  animation: preaching-line-reveal 760ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay) both;
+}
+
+.preaching-slide-action {
+  margin-top: 34px;
+  border-color: rgba(255, 255, 255, 0.72);
+  color: #fff;
+  background: transparent;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.slide-preaching.is-active .preaching-slide-action {
+  animation: preaching-action-reveal 560ms ease 760ms both;
+}
+
+.preaching-slide-action:hover,
+.preaching-slide-action:focus-visible {
+  color: #641f28;
+  background: #fff;
+}
+
+@keyframes preaching-line-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes preaching-action-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .slide-latest-teaching {
@@ -501,10 +619,11 @@ select {
 }
 
 .latest-teaching-inner {
+  position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  padding: 60px 0 92px;
+  padding: 104px 0 76px;
 }
 
 .latest-teaching-layout {
@@ -573,13 +692,27 @@ select {
   z-index: 2;
 }
 
+.latest-teaching-heading {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 13px;
+  width: max-content;
+  max-width: 100%;
+  transform: translateX(-50%);
+}
+
 .latest-teaching-kicker {
-  margin: 0 0 19px;
+  margin: 0;
   color: var(--gold-1);
   font-family: "Work Sans", sans-serif;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  font-size: clamp(1.45rem, 2.6vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -587,7 +720,6 @@ select {
   display: block;
   width: 58px;
   height: 2px;
-  margin-bottom: 26px;
   background: var(--gold-2);
 }
 
@@ -596,6 +728,42 @@ select {
   margin-bottom: 20px;
   font-size: clamp(2.35rem, 4vw, 4rem);
   line-height: 0.98;
+}
+
+.latest-teaching-phrase {
+  display: block;
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(20px);
+}
+
+.slide-latest-teaching.is-active .latest-teaching-phrase {
+  animation: latest-teaching-phrase-in 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.slide-latest-teaching.is-active .latest-teaching-phrase:nth-child(2) {
+  animation-delay: 520ms;
+}
+
+.slide-latest-teaching.is-active .latest-teaching-phrase:nth-child(3) {
+  animation-delay: 980ms;
+}
+
+.latest-teaching-and {
+  margin: 0.12em 0 0.16em;
+  color: var(--gold-1);
+  font-size: 0.56em;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+}
+
+@keyframes latest-teaching-phrase-in {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
 }
 
 .latest-teaching-description {
@@ -1702,12 +1870,21 @@ select {
     --button-bottom-mobile: 72px;
   }
 
+  .preaching-slide-panel {
+    padding-right: clamp(28px, 4vw, 52px);
+    padding-left: clamp(28px, 4vw, 52px);
+  }
+
+  .slide-preaching h2 {
+    font-size: clamp(2.5rem, 5vw, 4.1rem);
+  }
+
   .latest-teaching-layout {
     gap: 30px;
   }
 
   .latest-teaching-inner {
-    padding: 44px 0 80px;
+    padding: 94px 0 70px;
   }
 
   .slide-latest-teaching h2 {
@@ -1726,8 +1903,54 @@ select {
     --button-bottom-mobile: 56px;
   }
 
+  .preaching-slide-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 56% 44%;
+  }
+
+  .preaching-slide-video {
+    object-position: center 30%;
+  }
+
+  .preaching-slide-panel {
+    place-items: start center;
+    padding: 24px 28px 72px;
+    text-align: center;
+  }
+
+  .preaching-slide-panel::before {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .slide-preaching h2 {
+    font-size: clamp(2.25rem, 10vw, 3.15rem);
+    line-height: 0.88;
+  }
+
+  .preaching-slide-action {
+    min-height: 42px;
+    margin-top: 18px;
+    padding: 0 20px;
+    font-size: 1.12rem;
+  }
+
   .latest-teaching-inner {
     padding: 0;
+  }
+
+  .latest-teaching-heading {
+    top: 24px;
+    width: 100%;
+    padding: 0 58px;
+  }
+
+  .latest-teaching-kicker {
+    font-size: clamp(1.15rem, 5.8vw, 1.65rem);
+    letter-spacing: 0.12em;
   }
 
   .latest-teaching-layout {
@@ -1767,8 +1990,6 @@ select {
     left: 18px;
   }
 
-  .latest-teaching-kicker,
-  .latest-teaching-rule,
   .latest-teaching-description,
   .latest-teaching-date,
   .latest-teaching-browse {
@@ -1783,6 +2004,25 @@ select {
 
   .latest-teaching-actions {
     margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .latest-teaching-phrase,
+  .slide-latest-teaching.is-active .latest-teaching-phrase {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide-preaching.is-active .preaching-line > span,
+  .slide-preaching.is-active .preaching-slide-action {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 

@@ -121,20 +121,48 @@
           <article
             class="slide slide-preaching"
             data-slide
-            style="background-image: linear-gradient(rgba(29, 13, 10, 0.25), rgba(29, 13, 10, 0.45)), url('References/Website%20Slider%20Images/Preaching%20Slider.png');"
           >
-            <div class="container slide-inner">
-              <div class="slide-copy">
-                <a
-                  class="button button-gold"
-                  href="sermons.html"
-                >Listen Now</a>
+            <div class="preaching-slide-layout">
+              <div class="preaching-slide-media">
+                <video
+                  class="preaching-slide-video"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  preload="auto"
+                  data-slide-video
+                  aria-hidden="true"
+                >
+                  <source src="References/Galatians-2-preaching-loop.mp4?v=5319" type="video/mp4" />
+                </video>
+              </div>
+
+              <div class="preaching-slide-panel">
+                <div class="preaching-slide-message">
+                  <h2 aria-label="Preaching Christ from all of Scripture">
+                    <span class="preaching-line">
+                      <span style="--reveal-delay: 140ms">Preaching Christ</span>
+                    </span>
+                    <span class="preaching-line">
+                      <span style="--reveal-delay: 300ms">from all of</span>
+                    </span>
+                    <span class="preaching-line">
+                      <span style="--reveal-delay: 460ms">Scripture</span>
+                    </span>
+                  </h2>
+                  <a class="button preaching-slide-action" href="sermons.html">Listen Now</a>
+                </div>
               </div>
             </div>
           </article>
 
           <article class="slide slide-latest-teaching" data-slide data-latest-teaching>
             <div class="container slide-inner latest-teaching-inner">
+              <div class="latest-teaching-heading">
+                <p class="latest-teaching-kicker">YouTube Teaching Ministry</p>
+                <span class="latest-teaching-rule" aria-hidden="true"></span>
+              </div>
               <div class="latest-teaching-layout">
                 <a
                   class="latest-teaching-media"
@@ -151,9 +179,11 @@
                 </a>
 
                 <div class="latest-teaching-copy">
-                  <p class="latest-teaching-kicker">Latest Teaching</p>
-                  <span class="latest-teaching-rule" aria-hidden="true"></span>
-                  <h2 data-latest-teaching-title>Teaching centered on Christ and all of Scripture</h2>
+                  <h2 class="latest-teaching-message">
+                    <span class="latest-teaching-phrase">Teaching Sound Doctrine</span>
+                    <span class="latest-teaching-phrase latest-teaching-and">and</span>
+                    <span class="latest-teaching-phrase">Defending the Faith</span>
+                  </h2>
                   <p class="latest-teaching-description" data-latest-teaching-description>
                     Watch the newest biblical and theological teaching from Love of Truth.
                   </p>
