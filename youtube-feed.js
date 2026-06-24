@@ -33,6 +33,10 @@ function attributeValue(xml, tagName, attributeName) {
   return decodeXml(match?.[1] || "");
 }
 
+function isShortVideo(video) {
+  return video.url.includes("/shorts/") || /(?:^|\s)#shorts\b/i.test(video.title);
+}
+
 function parseYouTubeFeed(xml, channelId) {
   const header = xml.split(/<entry>/i)[0];
   const entryMatches = Array.from(xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi));
@@ -41,13 +45,14 @@ function parseYouTubeFeed(xml, channelId) {
     return {
       id: tagValue(entry, "yt:videoId"),
       title: tagValue(entry, "title") || "Untitled video",
+      url: attributeValue(entry, "link", "href"),
       description: tagValue(entry, "media:description"),
       publishedAt: tagValue(entry, "published"),
       thumbnail: attributeValue(entry, "media:thumbnail", "url"),
       duration: "",
       viewCount: attributeValue(entry, "media:statistics", "views") || null,
     };
-  }).filter((video) => video.id);
+  }).filter((video) => video.id && !isShortVideo(video));
 
   return {
     channel: {
@@ -87,4 +92,4 @@ async function getYouTubeFeed({ channelId = DEFAULT_CHANNEL_ID } = {}) {
   return feed;
 }
 
-module.exports = { DEFAULT_CHANNEL_ID, getYouTubeFeed, parseYouTubeFeed };
+module.exports = { DEFAULT_CHANNEL_ID, getYouTubeFeed, isShortVideo, parseYouTubeFeed };

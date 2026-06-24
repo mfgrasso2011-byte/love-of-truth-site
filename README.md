@@ -30,7 +30,7 @@ ruby scripts/migrate-sermons.rb /path/to/feed-pages content/sermons.json
 
 ## YouTube teaching page
 
-`teaching.html` loads the latest public uploads from YouTube's public Atom feed
+`teaching.html` loads the latest public non-Short uploads from YouTube's public Atom feed
 through a cached server-side endpoint. No YouTube API key, Google Cloud project,
 or Netlify environment variable is required.
 
