@@ -36,14 +36,39 @@ if (sermonsPage) {
     year: "numeric"
   }).format(new Date(`${value}T12:00:00`));
 
+  function scripturePosition(sermon) {
+    const bookPrefixes = {
+      Psalms: "Psalms?",
+      "Song of Solomon": "(?:Song of Solomon|Song of Songs)",
+      "1 Peter": "(?:1 Peter|1st Peter)"
+    };
+    const prefix = bookPrefixes[sermon.book] || sermon.book.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const passage = sermon.title.replace(new RegExp(`^${prefix}\\s*`, "i"), "");
+    const numbers = passage.match(/\d+/g)?.map(Number) || [];
+    return {
+      chapter: numbers[0] ?? Number.MAX_SAFE_INTEGER,
+      verse: numbers[1] ?? 0
+    };
+  }
+
+  function comparePassages(a, b) {
+    const aPosition = scripturePosition(a);
+    const bPosition = scripturePosition(b);
+    return aPosition.chapter - bPosition.chapter
+      || aPosition.verse - bPosition.verse
+      || a.title.localeCompare(b.title, undefined, { numeric: true })
+      || a.date.localeCompare(b.date);
+  }
+
   function filteredSermons() {
     const query = normalize(search.value).trim();
-    return sermons.filter((sermon) => {
+    const matches = sermons.filter((sermon) => {
       if (activeBook && sermon.book !== activeBook) return false;
       if (year.value && !sermon.date.startsWith(year.value)) return false;
       if (!query) return true;
       return normalize([sermon.title, sermon.book, sermon.description, sermon.date].join(" ")).includes(query);
     });
+    return activeBook ? matches.sort(comparePassages) : matches;
   }
 
   function makeBookSection(title, books, counts) {
@@ -53,7 +78,10 @@ if (sermonsPage) {
     heading.textContent = title;
     const list = document.createElement("ul");
 
-    books.filter((book) => counts.has(book)).forEach((book) => {
+    const availableBooks = books.filter((book) => counts.has(book));
+    list.style.setProperty("--sermon-book-rows", Math.ceil(availableBooks.length / 2));
+
+    availableBooks.forEach((book) => {
       const item = document.createElement("li");
       const button = document.createElement("button");
       button.type = "button";

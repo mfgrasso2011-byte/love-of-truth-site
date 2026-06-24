@@ -1750,6 +1750,8 @@ select {
 .sermon-testament ul {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--sermon-book-rows), auto);
+  grid-auto-flow: column;
   gap: 5px 42px;
   margin: 0;
   padding: 0;
@@ -1902,6 +1904,8 @@ select {
 
   .sermon-testament ul {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
   }
 
   .sermon-card {
