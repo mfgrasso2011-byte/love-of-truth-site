@@ -31,6 +31,12 @@ const videoDialog = document.querySelector("[data-video-dialog]");
 const videoDialogTitle = document.querySelector("[data-video-dialog-title]");
 const videoPlayer = document.querySelector("[data-video-player]");
 const videoDialogClose = document.querySelector("[data-video-dialog-close]");
+const latestTeaching = document.querySelector("[data-latest-teaching]");
+const latestTeachingThumbnail = document.querySelector("[data-latest-teaching-thumbnail]");
+const latestTeachingTitle = document.querySelector("[data-latest-teaching-title]");
+const latestTeachingDescription = document.querySelector("[data-latest-teaching-description]");
+const latestTeachingDate = document.querySelector("[data-latest-teaching-date]");
+const latestTeachingWatchLinks = Array.from(document.querySelectorAll("[data-latest-teaching-watch]"));
 
 const YOUTUBE_PREVIEW_DATA = {
   channel: {
@@ -590,6 +596,45 @@ async function loadYouTubeFeed() {
   }
 }
 
+function renderLatestTeaching(video) {
+  if (!latestTeaching || !video) return;
+
+  if (latestTeachingThumbnail) {
+    latestTeachingThumbnail.src = video.thumbnail;
+    latestTeachingThumbnail.alt = `${video.title} video thumbnail`;
+  }
+  if (latestTeachingTitle) latestTeachingTitle.textContent = video.title;
+  if (latestTeachingDescription) {
+    latestTeachingDescription.textContent = truncateDescription(video.description, 190)
+      || "Watch the newest biblical and theological teaching from Love of Truth.";
+  }
+  if (latestTeachingDate) latestTeachingDate.textContent = formatPublishedDate(video.publishedAt);
+
+  latestTeachingWatchLinks.forEach((link) => {
+    link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(video.id)}`;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      stopAutoplay();
+      openVideo(video);
+    });
+  });
+}
+
+async function loadLatestTeaching() {
+  if (!latestTeaching) return;
+
+  try {
+    const response = await fetch("/api/youtube-feed");
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Unable to load the latest teaching.");
+    renderLatestTeaching(data.videos?.[0]);
+  } catch (_error) {
+    // The static fallback remains fully usable when the feed is unavailable.
+  }
+}
+
 let currentSlide = 0;
 let autoplayId;
 
@@ -669,6 +714,7 @@ videoDialog?.addEventListener("click", (event) => {
 videoDialog?.addEventListener("close", () => videoPlayer?.replaceChildren());
 loadEbookAccess();
 loadYouTubeFeed();
+loadLatestTeaching();
 
 if (window.location.pathname.endsWith("success.html")) {
   writeCart([]);

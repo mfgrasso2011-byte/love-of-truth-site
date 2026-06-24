@@ -133,19 +133,39 @@
             </div>
           </article>
 
-          <article
-            class="slide slide-youtube"
-            data-slide
-            style="background-image: linear-gradient(rgba(18, 13, 12, 0.28), rgba(18, 13, 12, 0.5)), url('References/Website%20Slider%20Images/YouTube%20Slider.png');"
-          >
-            <div class="container slide-inner">
-              <div class="slide-copy">
+          <article class="slide slide-latest-teaching" data-slide data-latest-teaching>
+            <div class="container slide-inner latest-teaching-inner">
+              <div class="latest-teaching-layout">
                 <a
-                  class="button button-gold"
-                  href="https://www.youtube.com/channel/UC4DTiOj4ncwTFGFWB8Rybvw"
-                  target="_blank"
-                  rel="noreferrer"
-                >Visit Channel</a>
+                  class="latest-teaching-media"
+                  href="teaching.html"
+                  data-latest-teaching-watch
+                  aria-label="Watch the latest teaching video"
+                >
+                  <img
+                    src="References/Website%20Slider%20Images/Preaching.png"
+                    alt="Latest Love of Truth teaching"
+                    data-latest-teaching-thumbnail
+                  />
+                  <span class="latest-teaching-play" aria-hidden="true"></span>
+                </a>
+
+                <div class="latest-teaching-copy">
+                  <p class="latest-teaching-kicker">Latest Teaching</p>
+                  <span class="latest-teaching-rule" aria-hidden="true"></span>
+                  <h2 data-latest-teaching-title>Teaching centered on Christ and all of Scripture</h2>
+                  <p class="latest-teaching-description" data-latest-teaching-description>
+                    Watch the newest biblical and theological teaching from Love of Truth.
+                  </p>
+                  <p class="latest-teaching-date" data-latest-teaching-date></p>
+                  <div class="latest-teaching-actions">
+                    <a class="button button-gold" href="teaching.html" data-latest-teaching-watch>
+                      <span class="latest-teaching-button-play" aria-hidden="true">▶</span>
+                      Watch Now
+                    </a>
+                    <a class="button latest-teaching-browse" href="teaching.html">Browse Teaching</a>
+                  </div>
+                </div>
               </div>
             </div>
           </article>
@@ -161,6 +181,14 @@
           <button class="carousel-arrow" type="button" data-next aria-label="Next slide">&#8250;</button>
         </div>
       </section>
+
+      <dialog class="video-dialog" data-video-dialog aria-labelledby="video-dialog-title">
+        <div class="video-dialog-bar">
+          <h2 id="video-dialog-title" data-video-dialog-title>Latest teaching</h2>
+          <button type="button" data-video-dialog-close aria-label="Close video">&times;</button>
+        </div>
+        <div class="video-player-frame" data-video-player></div>
+      </dialog>
 
       <section class="homepage-newsletter" aria-label="Newsletter signup">
         <div class="container homepage-newsletter-inner">
