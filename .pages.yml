@@ -105,6 +105,9 @@ content:
           - name: audioUrl
             label: MP3 URL
             type: string
+          - name: youtubeId
+            label: YouTube video ID
+            type: string
           - name: sourceUrl
             label: Original sermon page
             type: string

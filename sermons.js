@@ -121,9 +121,19 @@ if (sermonsPage) {
       audio.remove();
     }
 
+    const watchButton = card.querySelector("[data-video]");
+    const youtubeLink = card.querySelector("[data-youtube]");
+    if (sermon.youtubeId) {
+      watchButton.addEventListener("click", () => openVideo({ id: sermon.youtubeId, title: sermon.title }));
+      youtubeLink.href = `https://www.youtube.com/watch?v=${encodeURIComponent(sermon.youtubeId)}`;
+    } else {
+      watchButton.remove();
+      youtubeLink.remove();
+    }
+
     const source = card.querySelector("[data-source]");
     source.href = sermon.sourceUrl;
-    source.textContent = sermon.audioUrl ? "Sermon details ↗" : "Watch or view sermon ↗";
+    source.textContent = sermon.audioUrl || sermon.youtubeId ? "Church page ↗" : "View sermon ↗";
     return card;
   }
 

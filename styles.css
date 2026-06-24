@@ -1810,7 +1810,7 @@ select {
 .sermon-card-book,
 .sermon-card-description,
 .sermon-card-speaker,
-.sermon-source-link,
+.sermon-card-links,
 .sermon-empty {
   font-family: "Work Sans", sans-serif;
 }
@@ -1866,11 +1866,43 @@ select {
   height: 38px;
 }
 
-.sermon-source-link {
+.sermon-watch-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 4px;
+  background: #9c3e20;
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 14px rgba(112, 45, 25, 0.2);
+}
+
+.sermon-watch-button:hover,
+.sermon-watch-button:focus-visible {
+  background: #702d19;
+}
+
+.sermon-watch-button span {
+  font-size: 0.68rem;
+}
+
+.sermon-card-links {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.sermon-card-links a {
   color: #8a341c;
   font-size: 0.78rem;
   font-weight: 700;
-  text-align: right;
 }
 
 .sermon-load-more {

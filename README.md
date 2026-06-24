@@ -28,6 +28,13 @@ macOS also includes a Ruby-compatible version:
 ruby scripts/migrate-sermons.rb /path/to/feed-pages content/sermons.json
 ```
 
+After refreshing the feed data, collect the YouTube embeds from the individual
+sermon pages (the second argument controls concurrent requests):
+
+```sh
+ruby scripts/migrate-sermon-videos.rb content/sermons.json 8
+```
+
 ## YouTube teaching page
 
 `teaching.html` loads the latest public non-Short uploads from YouTube's public Atom feed
