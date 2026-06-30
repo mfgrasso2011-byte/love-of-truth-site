@@ -108,8 +108,6 @@ const YOUTUBE_PREVIEW_DATA = {
 };
 
 const CART_KEY = "love-of-truth-cart";
-const FREE_SHIPPING_THRESHOLD = 4000;
-const SHIPPING_RATE_UNDER_THRESHOLD = 599;
 const PRODUCT_LABELS = {
   "sailing-to-chayah": "Sailing to Chayah: A Desperate Journey",
 };
@@ -184,8 +182,8 @@ function addCurrentProductToCart() {
 
 function unitAmountFor(item) {
   const priceMap = {
-    Hardcover: 2099,
-    Paperback: 1499,
+    Hardcover: 2299,
+    Paperback: 1599,
     EBook: 499,
   };
   return priceMap[item.format] || 0;
@@ -249,17 +247,14 @@ function renderCart() {
   }
 
   if (cartShippingNode) {
-    const shippingAmount = hasPhysical && subtotal < FREE_SHIPPING_THRESHOLD ? SHIPPING_RATE_UNDER_THRESHOLD : 0;
-    cartShippingNode.textContent = formatCurrency(shippingAmount);
+    cartShippingNode.textContent = "$0.00";
   }
 
   if (shippingStatusNode) {
     if (!hasPhysical) {
       shippingStatusNode.textContent = "No shipping is required for ebook-only orders.";
-    } else if (subtotal >= FREE_SHIPPING_THRESHOLD) {
-      shippingStatusNode.textContent = "Free shipping is unlocked for this order.";
     } else {
-      shippingStatusNode.textContent = `Shipping is ${formatCurrency(SHIPPING_RATE_UNDER_THRESHOLD)} for physical orders under ${formatCurrency(FREE_SHIPPING_THRESHOLD)}. Spend ${formatCurrency(FREE_SHIPPING_THRESHOLD - subtotal)} more to qualify for free shipping.`;
+      shippingStatusNode.textContent = "Free shipping is included for hardcover and paperback orders.";
     }
   }
 

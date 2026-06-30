@@ -5,15 +5,12 @@ const BOOKS = {
   "sailing-to-chayah": {
     name: "Sailing to Chayah: A Desperate Journey",
     formats: {
-      Hardcover: { amount: 2099, requiresShipping: true, taxCode: "txcd_99999999" },
-      Paperback: { amount: 1499, requiresShipping: true, taxCode: "txcd_99999999" },
+      Hardcover: { amount: 2299, requiresShipping: true, taxCode: "txcd_99999999" },
+      Paperback: { amount: 1599, requiresShipping: true, taxCode: "txcd_99999999" },
       EBook: { amount: 499, requiresShipping: false, taxCode: "txcd_10302000" },
     },
   },
 };
-
-const SHIPPING_RATE_UNDER_THRESHOLD = 599;
-const FREE_SHIPPING_THRESHOLD = 4000;
 
 function getConfig() {
   const domain =
@@ -143,28 +140,15 @@ function buildStripeForm(items, config) {
   }
 
   const needsShipping = items.some((item) => item.requiresShipping);
-  const physicalSubtotal = items.reduce(
-    (sum, item) => sum + (item.requiresShipping ? item.unitAmount * item.quantity : 0),
-    0
-  );
-
   if (needsShipping) {
     config.shippingCountries.forEach((country, index) => {
       params.set(`shipping_address_collection[allowed_countries][${index}]`, country);
     });
 
-    const shippingAmount =
-      physicalSubtotal < FREE_SHIPPING_THRESHOLD ? SHIPPING_RATE_UNDER_THRESHOLD : 0;
-    const shippingName =
-      shippingAmount > 0 ? "Standard shipping" : "Free shipping";
-
     params.set("shipping_options[0][shipping_rate_data][type]", "fixed_amount");
-    params.set(
-      "shipping_options[0][shipping_rate_data][fixed_amount][amount]",
-      String(shippingAmount)
-    );
+    params.set("shipping_options[0][shipping_rate_data][fixed_amount][amount]", "0");
     params.set("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "usd");
-    params.set("shipping_options[0][shipping_rate_data][display_name]", shippingName);
+    params.set("shipping_options[0][shipping_rate_data][display_name]", "Free shipping");
 
     if (config.enableStripeTax) {
       params.set("shipping_options[0][shipping_rate_data][tax_behavior]", "exclusive");
