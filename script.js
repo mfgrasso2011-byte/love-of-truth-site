@@ -6,6 +6,7 @@ const menuToggle = document.querySelector(".menu-toggle");
 const siteNav = document.querySelector(".site-nav");
 const formatInputs = Array.from(document.querySelectorAll("input[name='format']"));
 const productPrice = document.querySelector("[data-product-price]");
+const purchaseRow = document.querySelector("[data-purchase-form]");
 const cartCountNodes = Array.from(document.querySelectorAll("[data-cart-count]"));
 const addToCartButton = document.querySelector("[data-add-to-cart]");
 const quantityInput = document.querySelector("[data-quantity-input]");
@@ -159,10 +160,35 @@ function selectedFormat() {
   return checked ? checked.parentElement?.textContent?.trim() || "Hardcover" : "Hardcover";
 }
 
+function updateSelectedFormatDisplay(input) {
+  if (!productPrice) {
+    return;
+  }
+
+  const audiobookUrl = input.dataset.audiobookUrl;
+  const isAudiobook = Boolean(audiobookUrl);
+
+  if (purchaseRow) {
+    purchaseRow.hidden = isAudiobook;
+  }
+
+  if (isAudiobook) {
+    productPrice.innerHTML = `
+      <a class="button button-dark product-audiobook-link" href="${audiobookUrl}" target="_blank" rel="noopener noreferrer">
+        Listen on Amazon
+      </a>
+    `;
+    return;
+  }
+
+  productPrice.textContent = `$${Number(input.value).toFixed(2)}`;
+}
+
 function addCurrentProductToCart() {
   if (!addToCartButton) return;
   const productId = addToCartButton.dataset.productId;
   const format = selectedFormat();
+  if (format === "Audiobook") return;
   const quantity = Math.max(1, Number(quantityInput?.value || 1));
   const cart = readCart();
   const existing = cart.find((item) => item.productId === productId && item.format === format);
@@ -699,11 +725,7 @@ siteNav?.querySelectorAll("a").forEach((link) => {
 
 formatInputs.forEach((input) => {
   input.addEventListener("change", () => {
-    if (!productPrice) {
-      return;
-    }
-
-    productPrice.textContent = `$${Number(input.value).toFixed(2)}`;
+    updateSelectedFormatDisplay(input);
   });
 });
 

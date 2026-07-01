@@ -1111,6 +1111,13 @@ select {
   font-weight: 600;
 }
 
+.product-audiobook-link {
+  display: inline-flex;
+  width: fit-content;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
 .product-ship-note {
   margin: -12px 0 22px;
   color: var(--ink-soft);
