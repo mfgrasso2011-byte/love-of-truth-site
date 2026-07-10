@@ -1055,6 +1055,7 @@ select {
 
 .product-page {
   padding: 28px 0 88px;
+  font-family: "Cormorant Garamond", Georgia, serif;
 }
 
 .breadcrumbs {
@@ -1094,6 +1095,20 @@ select {
 
 .product-copy {
   padding-top: 4px;
+}
+
+.product-page input,
+.product-page button,
+.product-page .button,
+.product-page .product-price,
+.product-page .format-label,
+.product-page .format-option span,
+.product-page .product-note p,
+.product-page .cart-feedback,
+.product-page .social-proof-tab,
+.product-page .endorsement-attribution,
+.product-page .review-attribution {
+  font-family: "Cormorant Garamond", Georgia, serif;
 }
 
 .product-title {
@@ -1203,7 +1218,7 @@ select {
   max-width: 66ch;
   margin: 0 0 24px;
   color: var(--ink-soft);
-  font-size: 0.98rem;
+  font-size: clamp(1.12rem, 1.55vw, 1.24rem);
   line-height: 1.8;
 }
 
@@ -1226,6 +1241,115 @@ select {
 .product-note p + p,
 .cart-offer-note p + p {
   margin-top: 6px;
+}
+
+.product-social-proof {
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(66, 40, 28, 0.14);
+}
+
+.social-proof-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(52px, 8vw, 110px);
+  margin-bottom: 18px;
+}
+
+.social-proof-tab {
+  position: relative;
+  padding: 0 0 7px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-family: "Work Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.social-proof-tab::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.22;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.social-proof-tab.is-active {
+  color: var(--ink);
+}
+
+.social-proof-tab.is-active::after,
+.social-proof-tab:hover::after,
+.social-proof-tab:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.social-proof-tab:focus-visible {
+  outline: 2px solid rgba(103, 61, 16, 0.28);
+  outline-offset: 4px;
+}
+
+.social-proof-panel {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 2px 0 0;
+  text-align: center;
+}
+
+.endorsement-card blockquote,
+.review-card blockquote {
+  margin: 0;
+}
+
+.endorsement-card blockquote p,
+.review-card blockquote p,
+.reviews-empty p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: clamp(1.12rem, 1.55vw, 1.24rem);
+  line-height: 1.8;
+}
+
+.quote-mark {
+  display: inline-block;
+  margin-right: 0.08em;
+  color: inherit;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.35em;
+  font-weight: 600;
+  line-height: 0;
+  transform: translateY(0.18em);
+}
+
+.quote-mark-close {
+  margin-right: 0;
+  margin-left: 0.08em;
+}
+
+.endorsement-attribution,
+.review-attribution {
+  margin: 18px 0 0;
+  color: #111;
+  font-family: "Work Sans", sans-serif;
+  font-size: clamp(1.12rem, 1.55vw, 1.24rem);
+  line-height: 1.55;
 }
 
 .purchase-row {

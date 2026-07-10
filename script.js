@@ -37,6 +37,8 @@ const latestTeachingThumbnail = document.querySelector("[data-latest-teaching-th
 const latestTeachingDescription = document.querySelector("[data-latest-teaching-description]");
 const latestTeachingDate = document.querySelector("[data-latest-teaching-date]");
 const latestTeachingWatchLinks = Array.from(document.querySelectorAll("[data-latest-teaching-watch]"));
+const socialProofTabs = Array.from(document.querySelectorAll("[data-social-proof-tab]"));
+const socialProofPanels = Array.from(document.querySelectorAll("[data-social-proof-panel]"));
 
 const YOUTUBE_PREVIEW_DATA = {
   channel: {
@@ -726,6 +728,32 @@ siteNav?.querySelectorAll("a").forEach((link) => {
 formatInputs.forEach((input) => {
   input.addEventListener("change", () => {
     updateSelectedFormatDisplay(input);
+  });
+});
+
+socialProofTabs.forEach((tab) => {
+  tab.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const target = tab.dataset.socialProofTab;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+
+    socialProofTabs.forEach((currentTab) => {
+      const isActive = currentTab === tab;
+      currentTab.classList.toggle("is-active", isActive);
+      currentTab.setAttribute("aria-selected", String(isActive));
+    });
+
+    socialProofPanels.forEach((panel) => {
+      const isActive = panel.dataset.socialProofPanel === target;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo(scrollX, scrollY);
+    });
   });
 });
 
