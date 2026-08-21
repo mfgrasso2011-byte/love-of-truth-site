@@ -1,5 +1,15 @@
 # love-of-truth-site
 
+## Welcome-email offer
+
+The homepage shows a one-time Kit subscription popup using the existing Kit form
+(`960035c32a`). It is remembered in the visitor's browser after dismissal.
+
+To complete the 15% welcome offer, create a 15%-off Stripe promotion code and
+limit it to first-time customers, then create a Kit automation that sends that
+code after a subscriber confirms their email. Stripe Checkout is configured to
+display its promotion-code field automatically.
+
 ## Sermon archive and CMS
 
 `sermons.html` contains the local sermon archive. The catalog currently lives in

@@ -39,6 +39,9 @@ const latestTeachingDate = document.querySelector("[data-latest-teaching-date]")
 const latestTeachingWatchLinks = Array.from(document.querySelectorAll("[data-latest-teaching-watch]"));
 const socialProofTabs = Array.from(document.querySelectorAll("[data-social-proof-tab]"));
 const socialProofPanels = Array.from(document.querySelectorAll("[data-social-proof-panel]"));
+const KIT_FORM_UID = "960035c32a";
+const KIT_FORM_EMBED_URL = `https://love-of-truth-press.kit.com/${KIT_FORM_UID}/index.js`;
+const EMAIL_OFFER_SEEN_KEY = "love-of-truth-email-offer-seen";
 
 const YOUTUBE_PREVIEW_DATA = {
   channel: {
@@ -696,6 +699,61 @@ function stopAutoplay() {
   }
 }
 
+function createEmailOfferPopup() {
+  if (
+    !document.body?.hasAttribute("data-email-offer-popup") ||
+    document.querySelector("[data-email-offer-dialog]")
+  ) {
+    return;
+  }
+
+  const dialog = document.createElement("dialog");
+  dialog.className = "email-offer-dialog";
+  dialog.dataset.emailOfferDialog = "";
+  dialog.setAttribute("aria-labelledby", "email-offer-title");
+  dialog.innerHTML = `
+    <div class="email-offer-inner">
+      <button class="email-offer-close" type="button" aria-label="Close email offer">&times;</button>
+      <p class="email-offer-kicker">A welcome gift</p>
+      <h2 id="email-offer-title">Save 15% on your first order</h2>
+      <p class="email-offer-copy">Subscribe for book and ministry updates, and we’ll send a 15% welcome code to use at checkout.</p>
+      <div class="email-offer-form" data-email-offer-form></div>
+      <p class="email-offer-fine-print">Unsubscribe at any time. Your code will be delivered by email.</p>
+    </div>
+  `;
+
+  const closeButton = dialog.querySelector(".email-offer-close");
+  const close = () => {
+    if (dialog.open) dialog.close();
+  };
+  closeButton?.addEventListener("click", close);
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) close();
+  });
+  dialog.addEventListener("close", () => {
+    try {
+      window.localStorage.setItem(EMAIL_OFFER_SEEN_KEY, "true");
+    } catch {
+      // The offer can still function if browser storage is unavailable.
+    }
+  });
+
+  document.body.append(dialog);
+  const kitEmbed = document.createElement("script");
+  kitEmbed.async = true;
+  kitEmbed.dataset.uid = KIT_FORM_UID;
+  kitEmbed.src = KIT_FORM_EMBED_URL;
+  dialog.querySelector("[data-email-offer-form]")?.append(kitEmbed);
+
+  window.setTimeout(() => {
+    try {
+      if (!window.localStorage.getItem(EMAIL_OFFER_SEEN_KEY)) dialog.showModal();
+    } catch {
+      dialog.showModal();
+    }
+  }, 700);
+}
+
 nextButton?.addEventListener("click", () => {
   setActiveSlide(currentSlide + 1);
   startAutoplay();
@@ -758,6 +816,7 @@ socialProofTabs.forEach((tab) => {
 });
 
 addToCartButton?.addEventListener("click", addCurrentProductToCart);
+createEmailOfferPopup();
 checkoutButton?.addEventListener("click", beginCheckout);
 contactForm?.addEventListener("submit", submitContactForm);
 videoDialogClose?.addEventListener("click", closeVideo);

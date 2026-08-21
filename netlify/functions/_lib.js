@@ -127,6 +127,10 @@ function buildStripeForm(items, config) {
   params.set("mode", "payment");
   params.set("success_url", `${config.domain}/success.html?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${config.domain}/cancel.html`);
+  // Promotion-code eligibility (including first-time-order limits) is configured in Stripe.
+  // This exposes Stripe Checkout's secure code-entry field without placing a discount code
+  // or its rules in the public site source.
+  params.set("allow_promotion_codes", "true");
 
   const fulfillment = buildFulfillmentSummary(items);
   params.set("metadata[ebook_delivery_quantity]", String(fulfillment.ebookDeliveryQuantity));
