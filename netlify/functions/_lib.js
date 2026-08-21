@@ -127,6 +127,9 @@ function buildStripeForm(items, config) {
   params.set("mode", "payment");
   params.set("success_url", `${config.domain}/success.html?session_id={CHECKOUT_SESSION_ID}`);
   params.set("cancel_url", `${config.domain}/cancel.html`);
+  // Required for Stripe's first-time-customer promotion-code restriction to work
+  // with one-time Checkout payments.
+  params.set("customer_creation", "always");
   // Promotion-code eligibility (including first-time-order limits) is configured in Stripe.
   // This exposes Stripe Checkout's secure code-entry field without placing a discount code
   // or its rules in the public site source.

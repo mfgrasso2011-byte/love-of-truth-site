@@ -716,9 +716,9 @@ function createEmailOfferPopup() {
       <button class="email-offer-close" type="button" aria-label="Close email offer">&times;</button>
       <p class="email-offer-kicker">A welcome gift</p>
       <h2 id="email-offer-title">Save 15% on your first order</h2>
-      <p class="email-offer-copy">Subscribe for book and ministry updates, and we’ll send a 15% welcome code to use at checkout.</p>
+      <p class="email-offer-copy">Subscribe for book and ministry updates. After you confirm your email, we’ll send a 15% welcome code to use at checkout.</p>
       <div class="email-offer-form" data-email-offer-form></div>
-      <p class="email-offer-fine-print">Unsubscribe at any time. Your code will be delivered by email.</p>
+      <p class="email-offer-fine-print">Unsubscribe at any time. Your code will be delivered after confirmation.</p>
     </div>
   `;
 
