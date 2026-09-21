@@ -475,6 +475,108 @@ select {
   --button-top: 69%;
 }
 
+.slide-his-kingdom {
+  color: #fffaf1;
+  filter: none;
+  background:
+    radial-gradient(circle at 18% 42%, rgba(214, 174, 94, 0.14), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(125, 164, 188, 0.12), transparent 30%),
+    linear-gradient(120deg, #071a2b, #102f48 54%, #071c2e);
+}
+
+.his-kingdom-slide-inner {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(42px, 7vw, 114px);
+  align-items: center;
+  padding: 54px clamp(8px, 2vw, 28px) 96px;
+}
+
+.his-kingdom-slide-cover-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.his-kingdom-slide-cover {
+  display: block;
+  width: min(100%, 330px);
+  box-shadow: 0 26px 48px rgba(0, 0, 0, 0.42), 0 8px 18px rgba(0, 0, 0, 0.26);
+}
+
+.his-kingdom-slide-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 690px;
+}
+
+.his-kingdom-slide-kicker {
+  margin: 0 0 16px;
+  color: #e7c77d;
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.slide-his-kingdom h2 {
+  margin: 0;
+  color: #fffaf1;
+  font-size: clamp(3.1rem, 5.5vw, 5.9rem);
+  line-height: 0.88;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.his-kingdom-line {
+  display: block;
+  padding-bottom: 0.1em;
+  overflow: hidden;
+}
+
+.his-kingdom-line > span {
+  display: block;
+  opacity: 0;
+  transform: translateY(115%);
+}
+
+.slide-his-kingdom.is-active .his-kingdom-line > span {
+  animation: preaching-line-reveal 760ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay) both;
+}
+
+.his-kingdom-slide-description {
+  max-width: 41ch;
+  margin: 24px 0 0;
+  color: rgba(255, 250, 241, 0.88);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.55;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.his-kingdom-slide-action {
+  margin-top: 26px;
+  border-color: rgba(231, 199, 125, 0.72);
+  color: #fffaf1;
+  background: transparent;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.slide-his-kingdom.is-active .his-kingdom-slide-description {
+  animation: preaching-action-reveal 560ms ease 580ms both;
+}
+
+.slide-his-kingdom.is-active .his-kingdom-slide-action {
+  animation: preaching-action-reveal 560ms ease 700ms both;
+}
+
+.his-kingdom-slide-action:hover,
+.his-kingdom-slide-action:focus-visible {
+  color: #0a2134;
+  background: #e7c77d;
+}
+
 .slide-preaching {
   filter: none;
   background: #641f28;
@@ -2383,6 +2485,15 @@ select {
     font-size: clamp(2.5rem, 5vw, 4.1rem);
   }
 
+  .his-kingdom-slide-inner {
+    grid-template-columns: minmax(180px, 0.64fr) minmax(0, 1.36fr);
+    gap: clamp(28px, 4vw, 48px);
+  }
+
+  .slide-his-kingdom h2 {
+    font-size: clamp(2.6rem, 5vw, 4.4rem);
+  }
+
   .latest-teaching-layout {
     gap: 30px;
   }
@@ -2405,6 +2516,37 @@ select {
   .slide-preaching {
     --button-left-mobile: 67%;
     --button-bottom-mobile: 56px;
+  }
+
+  .his-kingdom-slide-inner {
+    grid-template-columns: minmax(116px, 0.62fr) minmax(0, 1.38fr);
+    gap: 16px;
+    padding: 38px 12px 64px;
+  }
+
+  .his-kingdom-slide-kicker {
+    margin-bottom: 9px;
+    font-size: 0.57rem;
+    letter-spacing: 0.12em;
+  }
+
+  .slide-his-kingdom h2 {
+    font-size: clamp(1.72rem, 7.2vw, 2.35rem);
+    line-height: 0.9;
+  }
+
+  .his-kingdom-slide-description {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .his-kingdom-slide-action {
+    min-width: 0;
+    min-height: 34px;
+    margin-top: 14px;
+    padding: 0 14px;
+    font-size: 0.82rem;
   }
 
   .preaching-slide-layout {
@@ -2560,7 +2702,10 @@ select {
 
 @media (prefers-reduced-motion: reduce) {
   .slide-preaching.is-active .preaching-line > span,
-  .slide-preaching.is-active .preaching-slide-action {
+  .slide-preaching.is-active .preaching-slide-action,
+  .slide-his-kingdom.is-active .his-kingdom-line > span,
+  .slide-his-kingdom.is-active .his-kingdom-slide-description,
+  .slide-his-kingdom.is-active .his-kingdom-slide-action {
     animation: none;
     opacity: 1;
     transform: none;
