@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -44,6 +44,8 @@
             <a href="books.html">Books</a>
             <div class="nav-dropdown-menu" aria-label="Book links">
               <a href="sailing-to-chayah.html">Sailing to Chayah: A Desperate Journey</a>
+              <a href="sailing-to-chayah-the-shuv-islands.html">Sailing to Chayah: The Shuv Islands</a>
+              <a href="the-son-who-gave-it-all.html">The Son Who Gave It All</a>
               <a href="his-kingdom.html">His Kingdom Shall Never End</a>
             </div>
           </div>
@@ -168,33 +170,90 @@
             </svg>
           </div>
 
-          <div class="books-grid">
-            <article class="book-card">
-              <a class="book-cover-link" href="sailing-to-chayah.html">
-                <img
-                  class="book-cover"
-                  src="References/Sailing%20to%20Chayah/A%20Desperate%20Journey%20Ebook%20Cover.jpg"
-                  alt="Sailing to Chayah: A Desperate Journey"
-                />
-              </a>
-              <h2 class="book-name">Sailing to Chayah</h2>
-              <p class="book-subtitle">A Desperate Journey</p>
-              <a class="button button-gold book-button" href="sailing-to-chayah.html">Learn More</a>
-            </article>
+          <section class="book-category" aria-labelledby="theology-books-title">
+            <div class="book-category-heading">
+              <h2 id="theology-books-title">Theology &amp; Biblical Studies</h2>
+              <p class="book-category-tagline">Rooted in Scripture. Equipping for a faith that endures.</p>
+            </div>
+            <div class="books-grid books-grid-single">
+              <article class="book-card">
+                <a class="book-cover-link" href="his-kingdom.html">
+                  <img
+                    class="book-cover"
+                    src="References/His%20Kingdom/His%20Kingdom%20front%20only%20cropped.png"
+                    alt="His Kingdom Shall Never End"
+                  />
+                </a>
+                <div class="book-copy">
+                  <h3 class="book-name">His Kingdom Shall Never End</h3>
+                  <p class="book-subtitle">The Davidic Covenant and the Promise of the Messiah</p>
+                  <a class="button button-gold book-button" href="his-kingdom.html">Learn More</a>
+                </div>
+              </article>
+            </div>
+          </section>
 
-            <article class="book-card">
-              <div class="book-cover-link">
-                <img
-                  class="book-cover"
-                  src="References/His%20Kingdom%20Placeholder.png"
-                  alt="His Kingdom Shall Never End"
-                />
-              </div>
-              <h2 class="book-name">His Kingdom Shall Never End</h2>
-              <p class="book-subtitle">The Davidic Covenant and the Promise of the Messiah</p>
-              <a class="button button-gold book-button" href="his-kingdom.html">Learn More</a>
-            </article>
-          </div>
+          <section class="book-category" aria-labelledby="family-books-title">
+            <div class="book-category-heading">
+              <h2 id="family-books-title">Love of Truth Family</h2>
+              <p class="book-category-tagline">Theology through Story</p>
+            </div>
+            <div class="books-grid books-grid-family">
+              <article class="book-card">
+                <a class="book-cover-link" href="sailing-to-chayah.html">
+                  <img
+                    class="book-cover"
+                    src="References/Sailing%20to%20Chayah/A%20Desperate%20Journey%20Ebook%20Cover.jpg"
+                    alt="Sailing to Chayah: A Desperate Journey"
+                  />
+                </a>
+                <div class="book-copy">
+                  <h3 class="book-name">Sailing to Chayah</h3>
+                  <p class="book-subtitle">A Desperate Journey</p>
+                  <a class="button button-gold book-button" href="sailing-to-chayah.html">Learn More</a>
+                </div>
+              </article>
+
+              <article class="book-card book-card-coming-soon">
+                <a class="book-cover-link" href="sailing-to-chayah-the-shuv-islands.html">
+                  <div class="book-cover book-cover-placeholder" role="img" aria-label="Sailing to Chayah: The Shuv Islands, coming soon">
+                    <span class="book-placeholder-series">Sailing to Chayah</span>
+                    <strong>The Shuv Islands</strong>
+                    <span class="book-placeholder-status">Coming Soon</span>
+                  </div>
+                </a>
+                <div class="book-copy">
+                  <h3 class="book-name">Sailing to Chayah</h3>
+                  <p class="book-subtitle">The Shuv Islands</p>
+                  <p class="book-release-date">Coming May 2027</p>
+                  <a class="button button-gold book-button" href="sailing-to-chayah-the-shuv-islands.html">Learn More</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="book-category" aria-labelledby="children-books-title">
+            <div class="book-category-heading">
+              <h2 id="children-books-title">Little Truth Seekers</h2>
+              <p class="book-category-tagline">Big truths for little hearts. Planting faith for a lifetime.</p>
+            </div>
+            <div class="books-grid books-grid-single">
+              <article class="book-card book-card-coming-soon">
+                <a class="book-cover-link" href="the-son-who-gave-it-all.html">
+                  <div class="book-cover book-cover-placeholder book-cover-children" role="img" aria-label="The Son Who Gave It All, coming soon">
+                    <strong>The Son Who<br />Gave It All</strong>
+                    <span class="book-placeholder-status">Coming Soon</span>
+                  </div>
+                </a>
+                <div class="book-copy">
+                  <h3 class="book-name">The Son Who Gave It All</h3>
+                  <p class="book-subtitle">A Prodigal Son Story</p>
+                  <p class="book-release-date">Coming early 2027</p>
+                  <a class="button button-gold book-button" href="the-son-who-gave-it-all.html">Learn More</a>
+                </div>
+              </article>
+            </div>
+          </section>
         </div>
       </section>
     </main>

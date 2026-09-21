@@ -70,7 +70,7 @@ const YOUTUBE_PREVIEW_DATA = {
       title: "How the Kingdom of God Shapes Christian Hope",
       description: "A representative teaching card used to demonstrate titles, dates, descriptions, and video duration.",
       publishedAt: "2026-06-11T12:00:00Z",
-      thumbnail: "References/His%20Kingdom%20Placeholder.png",
+      thumbnail: "References/His%20Kingdom/His%20Kingdom%20front%20only%20cropped.png",
       duration: "",
       viewCount: "1270",
     },
