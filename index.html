@@ -108,19 +108,36 @@
 
       <section class="hero-carousel" aria-label="Featured content carousel">
         <div class="carousel-track">
-          <article
-            class="slide slide-sailing is-active"
-            data-slide
-            style="background-image: linear-gradient(rgba(46, 16, 11, 0.2), rgba(46, 16, 11, 0.35)), url('References/Website%20Slider%20Images/Sailing%20to%20Chayah%20Slider.png');"
-          >
-            <div class="container slide-inner">
-              <div class="slide-copy">
-                <a class="button button-gold" href="sailing-to-chayah.html">View Book</a>
+          <article class="slide slide-sailing" data-slide data-slide-order="2">
+            <div class="container slide-inner sailing-slide-inner">
+              <div class="sailing-slide-cover-wrap">
+                <img
+                  class="sailing-slide-cover"
+                  src="References/Sailing%20to%20Chayah/A%20Desperate%20Journey%20Ebook%20Cover.jpg"
+                  alt="Sailing to Chayah: A Desperate Journey cover"
+                />
+              </div>
+              <div class="sailing-slide-copy">
+                <p class="sailing-slide-kicker">Love of Truth Family</p>
+                <h2 aria-label="Sailing to Chayah">
+                  <span class="sailing-line">
+                    <span style="--reveal-delay: 120ms">Sailing to</span>
+                  </span>
+                  <span class="sailing-line">
+                    <span style="--reveal-delay: 280ms">Chayah</span>
+                  </span>
+                </h2>
+                <p class="sailing-slide-subtitle">A Desperate Journey</p>
+                <p class="sailing-slide-description">
+                  When Nathan Ashir loses everything, his family must learn to trust the One
+                  who is sovereign over all.
+                </p>
+                <a class="button sailing-slide-action" href="sailing-to-chayah.html">Explore the Book</a>
               </div>
             </div>
           </article>
 
-          <article class="slide slide-his-kingdom" data-slide>
+          <article class="slide slide-his-kingdom is-active" data-slide data-slide-order="1">
             <div class="container slide-inner his-kingdom-slide-inner">
               <div class="his-kingdom-slide-cover-wrap">
                 <img
@@ -130,7 +147,7 @@
                 />
               </div>
               <div class="his-kingdom-slide-copy">
-                <p class="his-kingdom-slide-kicker">Forthcoming from Love of Truth</p>
+                <p class="his-kingdom-slide-kicker">Theology &amp; Biblical Studies</p>
                 <h2 aria-label="His Kingdom Shall Never End">
                   <span class="his-kingdom-line">
                     <span style="--reveal-delay: 120ms">His Kingdom</span>
@@ -140,8 +157,8 @@
                   </span>
                 </h2>
                 <p class="his-kingdom-slide-description">
-                  Defending the inherent messianic nature of the Davidic covenant—and,
-                  through it, the whole Old Testament.
+                  Showing how God’s promise to David truly predicts the coming of Christ—and
+                  shapes the entire Old Testament’s expectation of the Messiah.
                 </p>
                 <a class="button his-kingdom-slide-action" href="his-kingdom.html">Explore the Book</a>
               </div>
@@ -151,6 +168,7 @@
           <article
             class="slide slide-preaching"
             data-slide
+            data-slide-order="3"
           >
             <div class="preaching-slide-layout">
               <div class="preaching-slide-media">
@@ -187,7 +205,7 @@
             </div>
           </article>
 
-          <article class="slide slide-latest-teaching" data-slide data-latest-teaching>
+          <article class="slide slide-latest-teaching" data-slide data-slide-order="4" data-latest-teaching>
             <div class="container slide-inner latest-teaching-inner">
               <div class="latest-teaching-heading">
                 <p class="latest-teaching-kicker">YouTube Teaching Ministry</p>

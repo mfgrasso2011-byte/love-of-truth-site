@@ -1,4 +1,6 @@
-const slides = Array.from(document.querySelectorAll("[data-slide]"));
+const slides = Array.from(document.querySelectorAll("[data-slide]")).sort(
+  (first, second) => Number(first.dataset.slideOrder || 0) - Number(second.dataset.slideOrder || 0)
+);
 const dots = Array.from(document.querySelectorAll("[data-dot]"));
 const nextButton = document.querySelector("[data-next]");
 const prevButton = document.querySelector("[data-prev]");
