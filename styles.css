@@ -1666,6 +1666,14 @@ select {
   margin: 0;
 }
 
+.endorsement-card + .endorsement-card {
+  margin-top: 44px;
+}
+
+.review-card + .review-card {
+  margin-top: 44px;
+}
+
 .endorsement-card blockquote p,
 .review-card blockquote p,
 .reviews-empty p {
@@ -1673,6 +1681,10 @@ select {
   color: var(--ink-soft);
   font-size: clamp(1.12rem, 1.55vw, 1.24rem);
   line-height: 1.8;
+}
+
+.review-card blockquote p + p {
+  margin-top: 1.15em;
 }
 
 .quote-mark {
