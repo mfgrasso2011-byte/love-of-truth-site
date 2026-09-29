@@ -118,6 +118,17 @@ const YOUTUBE_PREVIEW_DATA = {
 const CART_KEY = "love-of-truth-cart";
 const PRODUCT_LABELS = {
   "sailing-to-chayah": "Sailing to Chayah: A Desperate Journey",
+  "his-kingdom": "His Kingdom Shall Never End",
+};
+const PRODUCT_PRICES = {
+  "sailing-to-chayah": {
+    Hardcover: 2299,
+    Paperback: 1599,
+    EBook: 499,
+  },
+  "his-kingdom": {
+    Paperback: 3200,
+  },
 };
 
 function isPhysicalFormat(format) {
@@ -214,12 +225,7 @@ function addCurrentProductToCart() {
 }
 
 function unitAmountFor(item) {
-  const priceMap = {
-    Hardcover: 2299,
-    Paperback: 1599,
-    EBook: 499,
-  };
-  return priceMap[item.format] || 0;
+  return PRODUCT_PRICES[item.productId]?.[item.format] || 0;
 }
 
 function renderCart() {

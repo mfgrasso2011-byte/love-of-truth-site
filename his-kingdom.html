@@ -82,7 +82,15 @@
             <div class="product-copy">
               <h1 class="product-title">His Kingdom Shall Never End</h1>
               <p class="product-subtitle">The Davidic Covenant and the Promise of the Messiah</p>
-              <p class="product-status">Expected publication: late September 2026</p>
+              <p class="product-status">Published — paperback preorder open</p>
+              <fieldset class="format-options" aria-label="Purchase format">
+                <legend class="format-label">Format</legend>
+                <label class="format-option">
+                  <input type="radio" name="format" value="32.00" checked />
+                  <span>Paperback</span>
+                </label>
+              </fieldset>
+              <p class="product-price" data-product-price>$32.00</p>
               <p class="product-summary">
                 In the first gospel sermon, Peter proclaims that Jesus Christ is the
                 fulfillment of the promise of the Messiah in Psalms 16 and 110. He reasons
@@ -104,7 +112,20 @@
 
               <div class="product-note product-release-offer">
                 <p><strong>Publication offer:</strong> Purchase <em>His Kingdom Shall Never End</em> and receive the <em>Sailing to Chayah</em> ebook and audiobook free.</p>
+                <p>Preorder now; orders will ship when author copies arrive.</p>
               </div>
+
+              <form class="purchase-row" data-purchase-form>
+                <label class="sr-only" for="book-quantity">Quantity</label>
+                <input id="book-quantity" type="number" min="1" value="1" data-quantity-input />
+                <button
+                  class="button button-dark"
+                  type="button"
+                  data-add-to-cart
+                  data-product-id="his-kingdom"
+                >Preorder</button>
+              </form>
+              <p class="cart-feedback" data-add-feedback></p>
             </div>
           </div>
         </div>

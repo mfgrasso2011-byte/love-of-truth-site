@@ -10,6 +10,12 @@ const BOOKS = {
       EBook: { amount: 499, requiresShipping: false, taxCode: "txcd_10302000" },
     },
   },
+  "his-kingdom": {
+    name: "His Kingdom Shall Never End",
+    formats: {
+      Paperback: { amount: 3200, requiresShipping: true, taxCode: "txcd_99999999" },
+    },
+  },
 };
 
 function getConfig() {
@@ -140,6 +146,10 @@ function buildStripeForm(items, config) {
   params.set("metadata[ebook_delivery_source]", fulfillment.ebookDeliverySource);
   params.set("metadata[ebook_delivery_title]", "Sailing to Chayah: A Desperate Journey");
   params.set("metadata[ebook_delivery_format]", "EBook");
+  params.set(
+    "metadata[order_items]",
+    items.map((item) => `${item.quantity} × ${item.name}`).join("; ")
+  );
 
   if (config.enableStripeTax) {
     params.set("automatic_tax[enabled]", "true");
@@ -250,6 +260,7 @@ function recordCompletedOrder(session) {
     amountTotal: session.amount_total,
     currency: session.currency,
     shippingDetails: session.shipping_details || null,
+    orderItems: metadata.order_items || "Not available.",
     ebookDeliveryQuantity: Math.max(0, Number(metadata.ebook_delivery_quantity || 0)),
     ebookDeliverySource: metadata.ebook_delivery_source || "none",
     metadata,
@@ -317,6 +328,7 @@ async function sendAdminOrderEmail(order, config) {
         <p><strong>Session ID:</strong> ${order.sessionId}</p>
         <p><strong>Customer:</strong> ${order.customerName || "Unknown"}</p>
         <p><strong>Email:</strong> ${order.customerEmail || "Unknown"}</p>
+        <p><strong>Items:</strong> ${order.orderItems}</p>
         <p><strong>Total:</strong> $${amount} ${String(order.currency || "usd").toUpperCase()}</p>
         <p><strong>Shipping:</strong><br />${shipping}</p>
         <p><strong>Received:</strong> ${order.receivedAt}</p>
