@@ -47,13 +47,14 @@ ruby scripts/migrate-sermon-videos.rb content/sermons.json 8
 
 ## YouTube teaching page
 
-`teaching.html` loads the latest public non-Short uploads from YouTube's public Atom feed
-through a cached server-side endpoint. No YouTube API key, Google Cloud project,
-or Netlify environment variable is required.
+`teaching.html` loads the latest public non-Short uploads through a cached,
+server-side YouTube Data API endpoint. The API key stays in the server environment
+and is never sent to visitors' browsers.
 
-The channel defaults to Love of Truth (`UC4DTiOj4ncwTFGFWB8Rybvw`). To point the
-page at another channel without changing code, set `YOUTUBE_CHANNEL_ID` locally
-or in Netlify.
+The channel defaults to Love of Truth (`UC4DTiOj4ncwTFGFWB8Rybvw`). The live feed
+uses the YouTube Data API, so set `YOUTUBE_API_KEY` in Netlify (and locally for
+local development). To point the page at another channel without changing code,
+set `YOUTUBE_CHANNEL_ID` locally or in Netlify.
 
 ### Preview without an API key
 

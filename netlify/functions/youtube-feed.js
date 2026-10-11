@@ -12,6 +12,7 @@ exports.handler = async function handler(event) {
   try {
     const feed = await getYouTubeFeed({
       channelId: process.env.YOUTUBE_CHANNEL_ID,
+      apiKey: process.env.YOUTUBE_API_KEY,
     });
 
     return {
