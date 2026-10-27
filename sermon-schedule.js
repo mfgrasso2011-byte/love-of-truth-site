@@ -17,7 +17,11 @@
     const upcoming = [], archive = [];
     sermons.forEach(sermon => (isUpcoming(sermon, now) ? upcoming : archive).push(sermon));
     upcoming.sort((a, b) => (Date.parse(a.scheduledStartTime) || Date.parse(a.date)) - (Date.parse(b.scheduledStartTime) || Date.parse(b.date)));
-    return { upcoming, archive };
+    // Only the nearest service date is advertised. Later dates remain stored,
+    // excluded from the archive until their own services have finished.
+    const nextDate = upcoming[0]?.date;
+    const queued = upcoming.filter(sermon => sermon.date !== nextDate);
+    return { upcoming: upcoming.filter(sermon => sermon.date === nextDate), queued, archive };
   }
   const api = { archiveTime, isUpcoming, partition };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
