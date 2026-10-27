@@ -1,6 +1,18 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-08T18:30:00.000Z",
+      "id": "sermon-83c8e849f2e670bb7080",
+      "airtableRecordId": "rec1ONQrNRgcCtaOo",
+      "title": "Isaiah 38:1–22: The Resurrection of Hezekiah",
+      "book": "Isaiah",
+      "date": "2026-11-08",
+      "description": "Isaiah 38 presents Hezekiah’s near death and restoration to life alongside Jerusalem’s deliverance from Assyria. As the anointed son of David cries to God and receives fifteen more years, his recovery becomes inseparable from the rescue of God’s people. His song of thanksgiving celebrates God’s promises, finds divine goodness even in suffering, and grounds the hope of life in the enduring praise and glory of God.\n\nHezekiah’s deliverance is also a typological resurrection pointing beyond itself to Jesus Christ. Hezekiah was a preliminary and imperfect fulfillment of Isaiah’s messianic hope, but Christ truly died for his people, bore the cup of wrath, and rose on the third day. Through his death and resurrection, Christ defeated death, disarmed the spiritual powers, and delivered his people from the devil. The passage therefore directs believers to behold the glory of their risen Savior, whose victory secures their salvation and everlasting praise of God.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=LPlHdAfZ-pM",
+      "youtubeId": "LPlHdAfZ-pM"
+    },
+    {
       "id": "sermon-4ee9fec3207c9c4e6310",
       "airtableRecordId": "recJf7Swzpmb3Gdle",
       "title": "2 Samuel 7:18–29: Overwhelmed by Grace",
