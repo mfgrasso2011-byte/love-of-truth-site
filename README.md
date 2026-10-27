@@ -72,3 +72,10 @@ Preview mode renders representative local data and the complete responsive page.
 The sample cards open the existing Sailing to Chayah YouTube video, so playback
 still requires an internet connection. The live public feed is available through
 the Netlify function after deployment.
+
+
+## Upcoming sermons
+
+The Sermons page shows scheduled sermons above the Bible-book archive. The publisher includes the approved YouTube `scheduledStartTime` in each archive entry. A sermon moves into its book listing 90 minutes after that start, with Pacific time shown to visitors. The page checks the transition while open and when returning from sleep; no new deployment is needed after the service. This is a scheduled transition, not detection of the actual preaching or livestream completion. If a service moves, review and publish the corrected schedule through the publisher. Existing historical date-only entries stay in the archive.
+
+Run `npm test` to check service boundaries, same-day AM/PM services, daylight saving and legacy entries.

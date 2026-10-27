@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Libre+Baskerville:wght@400;700&amp;family=Work+Sans:wght@400;500;600;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20261027" />
   </head>
   <body>
     <header class="site-header">
@@ -69,6 +69,11 @@
 
       <section class="sermon-browser" aria-label="Sermon archive">
         <div class="container">
+          <section class="sermon-upcoming" data-sermon-upcoming hidden aria-labelledby="upcoming-sermons-title">
+            <p class="sermons-kicker">Join us for worship</p>
+            <h2 id="upcoming-sermons-title">Upcoming sermons</h2>
+            <div class="sermon-results" data-upcoming-results></div>
+          </section>
           <div class="sermon-toolbar">
             <div class="sermon-view-tabs" role="tablist" aria-label="Browse sermons">
               <button class="sermon-tab is-active" type="button" role="tab" aria-selected="true" data-sermon-view="books">
@@ -130,6 +135,7 @@
     </dialog>
 
     <script src="script.js"></script>
-    <script src="sermons.js"></script>
+    <script src="sermon-schedule.js?v=20261027"></script>
+    <script src="sermons.js?v=20261027"></script>
   </body>
 </html>

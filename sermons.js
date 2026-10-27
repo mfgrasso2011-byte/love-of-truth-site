@@ -24,7 +24,11 @@ if (sermonsPage) {
     "3 John", "Jude", "Revelation"
   ];
 
+  const upcomingSection = sermonsPage.querySelector("[data-sermon-upcoming]");
+  const upcomingResults = sermonsPage.querySelector("[data-upcoming-results]");
+  let allSermons = [];
   let sermons = [];
+  let scheduleKey = "";
   let activeView = "books";
   let activeBook = "";
   let visibleCount = 20;
@@ -105,7 +109,7 @@ if (sermonsPage) {
     );
   }
 
-  function makeCard(sermon) {
+  function makeCard(sermon, upcoming = false) {
     const card = template.content.firstElementChild.cloneNode(true);
     card.querySelector("[data-date]").textContent = formatDate(sermon.date);
     card.querySelector("[data-book]").textContent = sermon.book || "Sermon";
@@ -131,15 +135,35 @@ if (sermonsPage) {
       youtubeLink.remove();
     }
 
+    if (upcoming) {
+      card.classList.add("sermon-card-upcoming");
+      const heading = card.querySelector("[data-title]");
+      const title = document.createElement("h3");
+      title.textContent = heading.textContent;
+      heading.replaceWith(title);
+      if (Number.isFinite(Date.parse(sermon.scheduledStartTime))) {
+        const time = document.createElement("span");
+        time.className = "sermon-service-time";
+        time.textContent = new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/Los_Angeles", hour: "numeric", minute: "2-digit", timeZoneName: "short"
+        }).format(new Date(sermon.scheduledStartTime));
+        card.querySelector("[data-date]").append(time);
+      }
+      if (sermon.youtubeId) {
+        watchButton.textContent = "View scheduled broadcast";
+        youtubeLink.textContent = "Open on YouTube ↗";
+      }
+    }
     const source = card.querySelector("[data-source]");
     source.href = sermon.sourceUrl;
     source.textContent = sermon.audioUrl || sermon.youtubeId ? "Church page ↗" : "View sermon ↗";
+    if (!sermon.sourceUrl || (sermon.youtubeId && source.href === youtubeLink.href)) source.remove();
     return card;
   }
 
   function renderResults() {
     const matches = filteredSermons();
-    results.replaceChildren(...matches.slice(0, visibleCount).map(makeCard));
+    results.replaceChildren(...matches.slice(0, visibleCount).map(sermon => makeCard(sermon)));
 
     if (matches.length > visibleCount) {
       const loadMore = document.createElement("button");
@@ -190,13 +214,35 @@ if (sermonsPage) {
 
   function populateYears() {
     const years = [...new Set(sermons.map(({ date }) => date.slice(0, 4)))].sort().reverse();
+    const selectedYear = year.value;
+    year.replaceChildren(year.options[0]);
     year.append(...years.map((value) => {
       const option = document.createElement("option");
       option.value = value;
       option.textContent = value;
       return option;
     }));
+    if (years.includes(selectedYear)) year.value = selectedYear;
   }
+
+  function refreshSchedule(force = false) {
+    const groups = SermonSchedule.partition(allSermons);
+    const nextKey = JSON.stringify(groups.upcoming.map(sermon => sermon.id));
+    if (!force && nextKey === scheduleKey) return;
+    scheduleKey = nextKey;
+    sermons = groups.archive;
+    upcomingResults.replaceChildren(...groups.upcoming.map(sermon => makeCard(sermon, true)));
+    upcomingSection.hidden = groups.upcoming.length === 0;
+    renderBookIndex();
+    populateYears();
+    if (activeView === "books") showBooks();
+    else renderResults();
+  }
+
+  // Also update a page left open through a service or restored from sleep.
+  setInterval(() => refreshSchedule(), 30000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshSchedule(); });
+  window.addEventListener("pageshow", () => refreshSchedule());
 
   bookIndex.addEventListener("click", (event) => {
     const button = event.target.closest("[data-book]");
@@ -220,16 +266,14 @@ if (sermonsPage) {
     else if (activeView === "latest") renderResults();
   });
 
-  fetch("content/sermons.json")
+  fetch("content/sermons.json", { cache: "no-cache" })
     .then((response) => {
       if (!response.ok) throw new Error(`Could not load sermons (${response.status})`);
       return response.json();
     })
     .then((data) => {
-      sermons = (data.sermons || []).sort((a, b) => b.date.localeCompare(a.date));
-      renderBookIndex();
-      populateYears();
-      showBooks();
+      allSermons = (data.sermons || []).sort((a, b) => b.date.localeCompare(a.date));
+      refreshSchedule(true);
     })
     .catch(() => {
       status.textContent = "The sermon archive is temporarily unavailable.";
