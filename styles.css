@@ -3744,3 +3744,18 @@ select {
 .sermon-service-time { display: block; margin-top: 8px; font-size: .9rem; font-weight: 500; }
 
 .sermon-book-index[hidden], .sermon-results[hidden], .sermon-empty[hidden] { display: none; }
+
+/* Discreet app information, separate from the public teaching and book pages. */
+.publisher-information-footer{border-top:1px solid var(--line);padding:20px 0 26px;color:var(--ink-soft);font:12px/1.7 "Work Sans",system-ui,sans-serif;text-align:center}
+.publisher-information-footer a{text-decoration:underline;text-underline-offset:3px}
+.publisher-home-link{justify-self:end;font:13px/1.5 "Work Sans",system-ui,sans-serif;color:var(--ink-soft)}
+.publisher-information{max-width:780px;padding-top:56px;padding-bottom:72px;line-height:1.8;overflow-wrap:anywhere}
+.publisher-information h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(2rem,5vw,3rem);line-height:1.15;margin:12px 0 20px}
+.publisher-information h2{font-size:1.2rem;line-height:1.4;margin:36px 0 12px;scroll-margin-top:110px}
+.publisher-information p{font-size:15px;margin:0 0 18px}
+.publisher-information a{text-decoration:underline;text-underline-offset:3px}
+.publisher-information .publisher-lede{font-size:18px;color:var(--ink-soft)}
+.publisher-information .publisher-eyebrow,.publisher-information .publisher-updated{font:12px/1.6 "Work Sans",system-ui,sans-serif;color:var(--ink-soft)}
+.publisher-information .publisher-eyebrow{letter-spacing:.12em}
+.publisher-information-page .header-inner{grid-template-columns:1fr auto}
+@media(max-width:600px){.publisher-information{padding-top:32px;padding-bottom:44px}.publisher-home-link{font-size:11px;max-width:100px;text-align:right}.publisher-information-page .brand-text{font-size:16px}}
