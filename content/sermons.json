@@ -1,6 +1,18 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-09T01:00:00.000Z",
+      "id": "sermon-e70aeee6a09eb25d42cd",
+      "airtableRecordId": "recgjtK6f9kcFMUM8",
+      "title": "2 Samuel 8:1–18: The Glory of David's Kingdom",
+      "book": "2 Samuel",
+      "date": "2026-11-08",
+      "description": "David’s victories in every direction establish and enlarge his kingdom, fulfilling God’s promises to Abraham concerning the land and showing the initial fulfillment of the Davidic covenant. The Lord is with David, makes his name great, gives his people rest, establishes his royal house, and provides spoils that will help prepare for the temple. Yet this glory is preliminary: David’s kingdom cannot provide the final, enduring peace that God has promised.\n\nDavid therefore foreshadows Jesus Christ, the greater Son of David and true King. Christ blesses people from every nation, builds God’s house from redeemed people, and subdues nations through his Spirit and Word. God’s faithfulness in David’s day assures believers that every promise in Christ will be fulfilled. Though the church’s enemies may appear strong, Christ will preserve his people, return in judgment, defeat every enemy, renew the world, and bring them into perfect and everlasting peace.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=1xtq7rbuUkg",
+      "youtubeId": "1xtq7rbuUkg"
+    },
+    {
       "scheduledStartTime": "2026-11-08T18:30:00.000Z",
       "id": "sermon-83c8e849f2e670bb7080",
       "airtableRecordId": "rec1ONQrNRgcCtaOo",
