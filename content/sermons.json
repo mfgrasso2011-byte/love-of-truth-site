@@ -1,6 +1,18 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-15T18:30:00.000Z",
+      "id": "sermon-1a83fe8b856d9ca7f5c2",
+      "airtableRecordId": "recClcN7hSvN9K5z8",
+      "title": "Isaiah 39:1–8: One Better than Hezekiah",
+      "book": "Isaiah",
+      "date": "2026-11-15",
+      "description": "Isaiah’s final account of Hezekiah shows why this godly son of David could only foreshadow the promised Messiah. After deliverance from Assyria, Hezekiah proudly displays his treasures to Babylonian envoys. Isaiah then announces that those treasures and some of his descendants will be carried into exile. Hezekiah’s complacency about peace in his own lifetime exposes his failure to seek the lasting good of God’s people.\n\nLike other Old Testament deliverers and kings, Hezekiah bears a real relationship to God’s promises but cannot fulfill them. His failure points beyond him to Jesus Christ, the true Son of David: the humble King who places his people’s good above his own, defeats every enemy, saves them from sin, and reigns forever in righteousness and peace. Christians are therefore called to read the Old Testament as proclaiming Christ and to reject Hezekiah’s shortsighted complacency by repenting, living faithfully, and laboring for the good of generations to come.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=vFoKdiUGdTM",
+      "youtubeId": "vFoKdiUGdTM"
+    },
+    {
       "scheduledStartTime": "2026-11-09T01:00:00.000Z",
       "id": "sermon-e70aeee6a09eb25d42cd",
       "airtableRecordId": "recgjtK6f9kcFMUM8",
