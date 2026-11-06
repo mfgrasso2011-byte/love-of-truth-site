@@ -1,6 +1,18 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-16T01:00:00.000Z",
+      "id": "sermon-0701c9175f24717c9161",
+      "airtableRecordId": "recIyKTPc2MDwEFAe",
+      "title": "2 Samuel 9:1–13: Kindness to the House of Saul",
+      "book": "2 Samuel",
+      "date": "2026-11-15",
+      "description": "David’s kindness to Mephibosheth displays the covenant faithfulness of a gracious king. For Jonathan’s sake, David welcomes a vulnerable member of Saul’s fallen house, restores his inheritance, and gives him a permanent place at the royal table. In exalting one who was lowly and returning Saul’s hostility with mercy, David foreshadows Jesus Christ, the greater Son of David, whose kingship is marked by compassion, service, and self-sacrifice.\n\nChrist hears his people in their distress, brings the unworthy into his household, and will finally undo every effect of the curse in the new creation. Believers facing pain and uncertainty are therefore called to persevere in faith. This world is not their lasting home, but Christ will fulfill his promises, abolish sorrow, and welcome all who trust in him into the home he has prepared.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=cOl3an3eChc",
+      "youtubeId": "cOl3an3eChc"
+    },
+    {
       "scheduledStartTime": "2026-11-15T18:30:00.000Z",
       "id": "sermon-1a83fe8b856d9ca7f5c2",
       "airtableRecordId": "recClcN7hSvN9K5z8",
