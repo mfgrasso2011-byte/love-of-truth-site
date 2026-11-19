@@ -1,6 +1,18 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-22T18:30:00.000Z",
+      "id": "sermon-f77bc77716c519354f31",
+      "airtableRecordId": "rec6VdxLf0IVBgLjI",
+      "title": "Isaiah 40:1–11: Part 1: Comfort for Zion",
+      "book": "Isaiah",
+      "date": "2026-11-22",
+      "description": "God speaks comfort to Zion amid the weariness and suffering of life. Isaiah announces that her warfare has ended and her sin is pardoned, pointing a troubled people to the salvation God provides. The comfort proclaimed in his Word rests on more than relief from present troubles: it rests on the forgiveness of sins.\n\nHow can Zion be said to have received the full measure for her sins when no one can pay the ransom for their own life? Isaiah’s Suffering Servant, the Messiah, represents his people and bears their sins in his atoning death. In him, their debt is paid and peace is secured. As Jesus’ words to the paralytic show, forgiveness is the deepest need of weary people and the ground of true comfort. Those who belong to Christ can find rest in him, knowing they have been bought by him and belong to him forever.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=0xYMmHFdJwk",
+      "youtubeId": "0xYMmHFdJwk"
+    },
+    {
       "scheduledStartTime": "2026-11-16T01:00:00.000Z",
       "id": "sermon-0701c9175f24717c9161",
       "airtableRecordId": "recIyKTPc2MDwEFAe",
