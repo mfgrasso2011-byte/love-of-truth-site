@@ -1,6 +1,18 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-23T01:00:00.000Z",
+      "id": "sermon-7a9a34365b2f2cfb5c7b",
+      "airtableRecordId": "recexgqexQepD2UDc",
+      "title": "2 Samuel 10:1–19: Victory over the Ammonites and the Syrians",
+      "book": "2 Samuel",
+      "date": "2026-11-22",
+      "description": "David’s kindness toward the Ammonites is met with the humiliation of his servants. His care for them and his victories over the Ammonites and Syrians reveal a king who defends his people. David’s reign points beyond itself to Jesus Christ, the Son of David, whose defeat of his enemies expresses his care and mercy toward his people.\n\nChristians still face opposition, including ridicule and pressure to compromise. Yet their King knows suffering, cares for them, and will not abandon them. As Joab and Abishai came to one another’s aid, believers are called to encourage and help one another through trials. Though Christ permits suffering for their good, he will return in glory, overcome every enemy, and vindicate those who hold fast to faith.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=0wI_maoq9io",
+      "youtubeId": "0wI_maoq9io"
+    },
+    {
       "scheduledStartTime": "2026-11-22T18:30:00.000Z",
       "id": "sermon-f77bc77716c519354f31",
       "airtableRecordId": "rec6VdxLf0IVBgLjI",
