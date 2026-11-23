@@ -1,6 +1,32 @@
 {
   "sermons": [
     {
+      "scheduledStartTime": "2026-11-29T18:30:00.000Z",
+      "id": "sermon-3fa19ce518491eb9ccd0",
+      "airtableRecordId": "recRF23JxuGXueHcf",
+      "title": "Isaiah 40:1–11: Part 2: The Way in the Wilderness",
+      "book": "Isaiah",
+      "date": "2026-11-29",
+      "servicePeriod": "AM",
+      "description": "Isaiah’s “way in the wilderness” portrays the promised salvation of God’s people as a new exodus. The Lord himself will return, lead his people out of exile, restore their fellowship with him, and reveal his glory in the climactic salvation accomplished by the Messiah. The highway must therefore be prepared: mountains lowered and valleys raised, not because geography can hinder God, but because sin obstructs communion with him.\n\nThis call to prepare the Lord’s way is a call to genuine repentance rather than merely hiding or professing regret for sin. Its ultimate fulfillment comes through John the Baptist, the voice in the wilderness who proclaimed repentance and prepared the way for Jesus Christ. Because Isaiah says the coming one is the Lord himself, Christ is revealed as God returning to his people—the radiance of God’s glory and the end of exile for all who are in him. In Christ, fellowship with God is restored and restless hearts find their true satisfaction.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=Qhn2YrAJbTk",
+      "youtubeId": "Qhn2YrAJbTk"
+    },
+    {
+      "scheduledStartTime": "2026-11-30T01:00:00.000Z",
+      "id": "sermon-53d27cf611d219b74e52",
+      "airtableRecordId": "reclRHG4QVyhJWPHg",
+      "title": "2 Samuel 11:1–5: David's Fall",
+      "book": "2 Samuel",
+      "date": "2026-11-29",
+      "servicePeriod": "PM",
+      "description": "David’s adultery with Bathsheba marks a decisive fall after the largely positive account of his life. Yet this sin did not arise suddenly: earlier compromises had formed a pattern that grew increasingly public and destructive. David’s fall therefore exposes how unchecked sin progresses and warns even the godly to take heed lest they fall. Sexual sin is especially entangling, harms others, dishonors Christ, and is ultimately committed against God himself.\n\nThe passage calls believers to reject every compromise, confront sin faithfully, and repent before it spreads. David’s failure also clarifies the distinction between this flawed anointed king and the true Messiah. Christ is the faithful King and Bridegroom who does not take another’s bride, but gives his life for his own rebellious bride, cleansing and beautifying her. Those convicted of sin are therefore called to turn to Christ and find cleansing in his blood.",
+      "audioUrl": "",
+      "sourceUrl": "https://www.youtube.com/watch?v=0bdJccWxJxk",
+      "youtubeId": "0bdJccWxJxk"
+    },
+    {
       "scheduledStartTime": "2026-11-23T01:00:00.000Z",
       "id": "sermon-7a9a34365b2f2cfb5c7b",
       "airtableRecordId": "recexgqexQepD2UDc",
